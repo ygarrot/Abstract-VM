@@ -6,11 +6,20 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 16:48:24 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/03/18 13:02:07 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/03/18 13:59:56 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
+
+/* enum  eOperandPrecision */
+/* { */
+/* 	Int8, */
+/* 	Int16, */
+/* 	Int32, */
+/* 	Float, */
+/* 	Double */
+/* }; */
 
 enum  eOperandType
 {
