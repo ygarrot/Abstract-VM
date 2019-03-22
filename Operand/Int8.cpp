@@ -1,13 +1,22 @@
-//
-// Created by Yoan GARROT on 2019-03-17.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Int8.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/22 15:13:56 by ygarrot           #+#    #+#             */
+/*   Updated: 2019/03/22 15:14:06 by ygarrot          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "Int8.h"
 
-IOperand const * Int8::operator+( IOperand const & rhs ) const
-{
-	return new Int8(this->toString() + rhs.toString());
-}
+#include "Int8.hpp"
+
+/* IOperand const * Int8::operator+( IOperand const & rhs ) const */
+/* { */
+	/* return new Int8(this->toString() + rhs.toString()); */
+/* } */
 
 /* virtual int getPrecision( void ) const = 0; // Precision of the type of the instance */
 /* virtual eOperandType getType( void ) const = 0; // Type of the instance */

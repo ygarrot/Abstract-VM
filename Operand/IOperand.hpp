@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 16:48:24 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/03/18 13:59:56 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/03/22 16:00:55 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@
 /* 	Double */
 /* }; */
 
-enum  eOperandType
+typedef enum  eOperandType
 {
-	Int8,
-	Int16,
-	Int32,
-	Float,
-	Double
-};
+	INT8,
+	INT16,
+	INT32,
+	FLOAT,
+	DOUBLE
+} tOperandType;
 
 class IOperand {
 	public:
@@ -40,5 +40,5 @@ class IOperand {
 		virtual IOperand const * operator/( IOperand const & rhs ) const = 0; // Quotient
 		virtual IOperand const * operator%( IOperand const & rhs ) const = 0; // Modulo
 		virtual std::string const & toString( void ) const = 0; // String representation of the instance
-		virtual ~IOperand( void ) {}
+		virtual ~IOperand( void ) {};
 };
