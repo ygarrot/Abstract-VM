@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 15:13:28 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/03/22 17:24:33 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/03/23 12:37:49 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,22 @@
 
 int main(void)
 {
-	Int8 test(1);
+	TOperand<double> test(std::numeric_limits<double>::min());
+	TOperand<double> test3(2.0);
+	/* Int8 test3(INT_MAX); */
 	/* TOperand<int> test; */
 
-	const TOperand<int> *test2 =  reinterpret_cast<const TOperand<int> * >(test + test);
-	std::cout << *test2;
-	std::cout << "hello world" << std::endl;
+	const TOperand<int> *test2 =  reinterpret_cast<const TOperand<int> * >(test - test3);
+	std::cout << *test2 << std::endl;
+
+	TOperand<int> testint(INT_MAX);
+	TOperand<int> testint2(INT_MAX);
+	/* Int8 test3(INT_MAX); */
+	/* TOperand<int> test; */
+
+	const TOperand<int> *testint3 =  reinterpret_cast<const TOperand<int> * >(test + test3);
+	std::cout << *testint3 << std::endl;
+
+	std::cout << "hello world2" << std::endl;
 
 }
