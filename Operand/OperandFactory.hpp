@@ -6,11 +6,11 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 12:53:56 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/03/18 13:55:33 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/03/23 14:36:05 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Int8.h"
+#include "Int8.hpp"
 /* #include "IOperand.hpp" */
 /* #include "Int16.hpp" */
 /* #include "Int32.hpp" */
