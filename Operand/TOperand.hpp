@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:09:14 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/03/23 14:33:39 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/03/24 11:58:36 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ class TOperand: public IOperand {
 		virtual	IOperand const * operator%( IOperand const & rhs ) const{(void)rhs;return new TOperand<T>();};
 		virtual	std::string const & toString( void ) const;
 	private:
+		std::string _str;
 		T _n;
 		eOperandType _type;
 };
@@ -64,7 +65,7 @@ int TOperand<T>::getPrecision( void ) const
 template<typename T>
 std::string const & TOperand<T>::toString( void ) const
 {
-	return (std::to_string(this->_n));
+	return _str;
 }
 
 template<typename T>

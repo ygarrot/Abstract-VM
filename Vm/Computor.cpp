@@ -6,28 +6,17 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/03/23 18:29:00 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/03/24 13:00:55 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Computor.hpp"
 
-template<typename T>
-class my_visitor : public boost::static_visitor<T>
-{
-	public:
-		int operator()(TOperand & op, TOperand &op2) const
-		{
-			return op
-		}
-};
-
-
-std::vector<boost::variant<TOperand<int>>> Computor::get_elem(size_t n)
+std::vector<OPVARIANT> Computor::get_elem(size_t n)
 {
 	if (_vect.size() < n)
 		;/* throw std::exception("empty stack"); */
-	return std::vector<boost::variant<TOperand<int>>>(_vect.end() - n, _vect.end());
+	return std::vector<OPVARIANT>(_vect.end() - n, _vect.end());
 }
 
 		template<typename T>
@@ -45,8 +34,8 @@ void	Computor::pop()
 
 void  Computor::add()
 {
-	std::vector<boost::variant<TOperand<int>>> tmp = get_elem(2);
-	
-	boost::apply_visitor
-	double tmp = tmp[1]._n + tmp[2]._n;
+	std::vector<OPVARIANT> tmp = get_elem(2);
+
+	boost::apply_visitor(add_visitor(), tmp[0], tmp[1]);
 }
+
