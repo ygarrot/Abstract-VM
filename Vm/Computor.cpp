@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/03/24 13:00:55 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/03/24 13:27:03 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,14 @@ void  Computor::add()
 	std::vector<OPVARIANT> tmp = get_elem(2);
 
 	boost::apply_visitor(add_visitor(), tmp[0], tmp[1]);
+}
+
+
+void  Computor::dump()
+{
+	for (const auto& nextVariant : _vect)
+	{
+		boost::apply_visitor(print_visitor{}, nextVariant);
+	}
 }
 
