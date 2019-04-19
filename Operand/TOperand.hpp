@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:09:14 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/18 16:32:59 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/19 14:18:45 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ class TOperand: public IOperand {
 		IOperand &operator=(IOperand const & src);
 		TOperand(){};
 		TOperand(std::string){};
-		TOperand(T type){this->_n = type;};
+		TOperand(T type){this->_n = type; this->_str = std::to_string(this->_n); };
 		TOperand(TOperand const & src){(void)src;};
 		~TOperand(void){};
 		T		get_value(void) const {/*std::cout <<this->_n ;*/return this->_n;};

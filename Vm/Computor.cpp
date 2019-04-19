@@ -6,24 +6,27 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/19 13:41:22 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/19 15:29:50 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Computor.hpp"
 
-std::vector< IOperand* > Computor::get_elem(size_t n)
+std::vector< IOperand const * > Computor::get_elem(size_t n)
 {
 	if (_vect.size() < n)
 		;/* throw std::exception("empty stack"); */
-	return std::vector< IOperand* >(_vect.end() - n, _vect.end());
+	std::vector< IOperand const * > ret(_vect.end() - n, _vect.end());
+	_vect.pop_back();
+	_vect.pop_back();
+	return ret;
 }
 
-/* void		Computor::push(TOperan const & op) */
-/* { */
-/* 	check_stack(); */
-/* 	_vect.push_back(op); */
-/* } */
+void		Computor::push(IOperand const * op)
+{
+	check_stack();
+	_vect.push_back(op);
+}
 
 void	Computor::pop()
 {
@@ -33,18 +36,66 @@ void	Computor::pop()
 
 void  Computor::add()
 {
-	TOperand <int>t;
-	std::vector< IOperand* > tmp = get_elem(2);
-	std::cout << *tmp[0] + *tmp[1];
-	/* push<int>(t); */
+	std::vector< IOperand const * > tmp = get_elem(2);
+	push(*tmp[0] + *tmp[1]);
 }
 
+void  Computor::sub()
+{
+	std::vector< IOperand const * > tmp = get_elem(2);
+	push(*tmp[0] - *tmp[1]);
+}
+
+void  Computor::mul()
+{
+	std::vector< IOperand const * > tmp = get_elem(2);
+	push(*tmp[0] * *tmp[1]);
+}
+
+void  Computor::div()
+{
+	std::vector< IOperand const * > tmp = get_elem(2);
+	push(*tmp[0] / *tmp[1]);
+}
+
+void  Computor::mod()
+{
+	std::vector< IOperand const * > tmp = get_elem(2);
+	push(*tmp[0] % *tmp[1]);
+}
+
+void  Computor::print()
+{
+	std::vector< IOperand const * > tmp = get_elem(1);
+	/* std::cout << static_cast<char>(tmp[0]->toString()); */
+}
 
 void  Computor::dump()
 {
-	/* std::vector<OPVARIANT>:: it = _vect.begin(); */
-	/* for (OPVARIANT & obj: _vect) { */
-		/* boost::apply_visitor(print_visitor(), obj); */
-	/* } */
+	for (IOperand const * op : _vect)
+	{
+		std::cout << op->toString(); 
+	}
 }
 
+typedef void (Computor::*op_func)();
+typedef std::map<std::string, op_func> func_tab_t ;
+
+void Computor::vm_dic()
+{
+	func_tab_t funcMap =
+	{
+		{ "pop", &Computor::pop},
+		{ "dump", &Computor::dump},
+		{ "add", &Computor::add},
+		{ "sub", &Computor::sub},
+		{ "mul", &Computor::mul},
+		{ "div", &Computor::div},
+		{ "mod", &Computor::mod},
+		{ "print", &Computor::print},
+		/* { "exit", &Computor::exit} */
+	};
+	func_tab_t::iterator it = funcMap.find("smod");
+	if (it == funcMap.end())
+		std::cout <<"end"<<std::endl;
+}

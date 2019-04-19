@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:52 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/19 13:40:21 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/19 14:39:11 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@
 #include <iostream>
 #include <vector>
 #include <exception>
-#include "visitor_structs.hpp"
-/* typedef boost::variant<TOperand<int>> OPVARIANT; */
+#include "../Operand/Int8.hpp"
+#include <functional>
+#include <map>
+#include <string>
+#include <iostream>
 /* class TOperand; */
 /* class IOperand; */
 
@@ -31,12 +34,12 @@ class Computor
 		Computor(std::string){};
 		Computor(Computor const & src){(void)src;};
 		~Computor(void){};
-		std::vector< IOperand* > get_elem(size_t n);
-		void		push(IOperand  * op);
-		template<typename T>
-		void		ft_assert(TOperand<T> const & op);
+		std::vector< IOperand const * > get_elem(size_t n);
+		void		push(IOperand const * op);
 		void		pop();
 		void	dump();
+		template<typename T>
+		void		ft_assert(TOperand<T> const & op);
 		void	add();
 		void	sub();
 		void	mul();
@@ -45,16 +48,11 @@ class Computor
 		void	print();
 		void	exit();
 		void	check_stack(){};
+		void vm_dic();
 	private:
-		std::vector< IOperand *> _vect;
+		std::vector< const IOperand *> _vect;
 };
 
 #endif
-
-void		Computor::push(IOperand  * op)
-{
-	check_stack();
-	_vect.push_back(op);
-}
 
 

@@ -1,23 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/24 11:36:35 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/19 15:29:15 by ygarrot          ###   ########.fr       */
+/*   Created: 2019/04/19 15:37:19 by ygarrot           #+#    #+#             */
+/*   Updated: 2019/04/19 15:42:15 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Computor.hpp"
-int main()
+#include "Parser.hpp"
+
+Parser::Parser(std::string target) 
 {
-	Computor c;
-	Int8 i(10);
-	c.push(&i);
-	c.push(&i);
-	c.add();
-	c.dump();
-	c.vm_dic();
+	(void)target;
+}
+
+Parser::Parser() 
+{
+
+}
+
+Parser::~Parser() 
+{
+
+}
+
+Parser::Parser(Parser const &src)
+{
+	*this = src;
+}
+
+Parser     &Parser::operator=(Parser const & src) 
+{
+	(void)src;
+	return *this;
+}
+
+void parse(std::vector<Token>  & list)
+{
+	for (Token token: list)
+	{
+		if (token.str == "")
+			;
+	}
 }
