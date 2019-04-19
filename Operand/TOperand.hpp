@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:09:14 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/03/24 11:58:36 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/18 16:32:59 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ class TOperand: public IOperand {
 		TOperand(T type){this->_n = type;};
 		TOperand(TOperand const & src){(void)src;};
 		~TOperand(void){};
-		int		get_value(void) const {return this->_n;};
+		T		get_value(void) const {/*std::cout <<this->_n ;*/return this->_n;};
 		virtual	int getPrecision( void ) const;
 		virtual	eOperandType getType( void ) const;
 		virtual void	check_exceptions(TOperand const & rhs) const;
@@ -44,7 +44,6 @@ class TOperand: public IOperand {
 		T _n;
 		eOperandType _type;
 };
-
 
 template<typename T>
 IOperand &TOperand<T>::operator=(IOperand const & src)

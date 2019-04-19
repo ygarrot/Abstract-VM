@@ -6,13 +6,19 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 11:36:35 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/03/24 11:37:14 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/19 13:49:33 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Computor.hpp"
+#include "../Operand/Int8.hpp"
 int main()
 {
 	Computor c;
+	Int8 i;
+	/* TOperand<int> a(1); */
 	(void)c;
+	c.push(&i);
+	c.push(&i);
+	c.add();
 }

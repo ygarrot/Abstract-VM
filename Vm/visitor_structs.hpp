@@ -6,13 +6,13 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 12:53:13 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/03/24 13:19:28 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/18 16:25:14 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <boost/variant.hpp>
 #include "../Operand/TOperand.hpp"
-#define OPVARIANT boost::variant< TOperand<int> > 
+typedef boost::variant<TOperand<int>> OPVARIANT;
 
 struct add_visitor : public boost::static_visitor<OPVARIANT>
 {
@@ -52,7 +52,8 @@ struct mod_visitor : public boost::static_visitor<OPVARIANT>
 struct print_visitor : public boost::static_visitor<OPVARIANT>
 {
 		template<typename T>
-		void operator()(T a) const { std::cout << a << std::endl;};
+		T operator()(T a) const {std::cout<<"tesT"; std::cout << a.get_value() << std::endl; return a;};
+
 };
 
 

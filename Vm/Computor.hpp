@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:52 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/03/24 12:58:07 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/19 13:40:21 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <vector>
 #include <exception>
 #include "visitor_structs.hpp"
+/* typedef boost::variant<TOperand<int>> OPVARIANT; */
 /* class TOperand; */
 /* class IOperand; */
 
@@ -30,9 +31,8 @@ class Computor
 		Computor(std::string){};
 		Computor(Computor const & src){(void)src;};
 		~Computor(void){};
-		std::vector< OPVARIANT > get_elem(size_t n);
-		template<typename T>
-		void		push(TOperand<T> const & op);
+		std::vector< IOperand* > get_elem(size_t n);
+		void		push(IOperand  * op);
 		template<typename T>
 		void		ft_assert(TOperand<T> const & op);
 		void		pop();
@@ -46,7 +46,15 @@ class Computor
 		void	exit();
 		void	check_stack(){};
 	private:
-		std::vector< OPVARIANT > _vect;
+		std::vector< IOperand *> _vect;
 };
 
 #endif
+
+void		Computor::push(IOperand  * op)
+{
+	check_stack();
+	_vect.push_back(op);
+}
+
+
