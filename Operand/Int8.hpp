@@ -1,10 +1,17 @@
-//
-// Created by Yoan GARROT on 2019-03-17.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Int8.hpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/20 13:17:04 by ygarrot           #+#    #+#             */
+/*   Updated: 2019/04/20 13:17:44 by ygarrot          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#ifndef ABSTRACT_VM_INT8_H
-#define ABSTRACT_VM_INT8_H
-
+#ifndef INT8_H
+#define INT8_H
 
 #include <iostream>
 #include "TOperand.hpp"
@@ -26,8 +33,6 @@ class Int8: public TOperand<int>
 		/* TOperand &operator=(TOperand const & src){(void)src; return *this;}; */
 		~Int8(void){};
 	private:
-		std::string stri;
-		/* int8_t _n; */
 };
 
 

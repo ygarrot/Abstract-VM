@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:52 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/19 14:39:11 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/20 15:11:40 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ class Computor
 		void		push(IOperand const * op);
 		void		pop();
 		void	dump();
-		template<typename T>
-		void		ft_assert(TOperand<T> const & op);
+		void		ft_assert(IOperand const * op);
 		void	add();
 		void	sub();
 		void	mul();
@@ -48,7 +47,6 @@ class Computor
 		void	print();
 		void	exit();
 		void	check_stack(){};
-		void vm_dic();
 	private:
 		std::vector< const IOperand *> _vect;
 };

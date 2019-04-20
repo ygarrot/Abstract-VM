@@ -6,9 +6,12 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 16:48:24 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/03/22 16:00:55 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/20 13:20:26 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef IOPERAND_HPP
+#define IOPERAND_HPP
 
 #include <iostream>
 
@@ -42,3 +45,5 @@ class IOperand {
 		virtual std::string const & toString( void ) const = 0; // String representation of the instance
 		virtual ~IOperand( void ) {};
 };
+
+#endif

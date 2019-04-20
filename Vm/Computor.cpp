@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/19 15:29:50 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/20 14:54:39 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,24 +78,3 @@ void  Computor::dump()
 	}
 }
 
-typedef void (Computor::*op_func)();
-typedef std::map<std::string, op_func> func_tab_t ;
-
-void Computor::vm_dic()
-{
-	func_tab_t funcMap =
-	{
-		{ "pop", &Computor::pop},
-		{ "dump", &Computor::dump},
-		{ "add", &Computor::add},
-		{ "sub", &Computor::sub},
-		{ "mul", &Computor::mul},
-		{ "div", &Computor::div},
-		{ "mod", &Computor::mod},
-		{ "print", &Computor::print},
-		/* { "exit", &Computor::exit} */
-	};
-	func_tab_t::iterator it = funcMap.find("smod");
-	if (it == funcMap.end())
-		std::cout <<"end"<<std::endl;
-}

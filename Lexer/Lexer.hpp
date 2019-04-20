@@ -6,14 +6,14 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 16:03:50 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/20 11:46:35 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/20 15:11:43 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_HPP
 #define LEXER_HPP
 
-#include "../Operand/IOperand.hpp"
+#include "Token.hpp"
 
 #include <sstream>
 #include <iostream>
@@ -22,43 +22,12 @@
 #include <fstream>
 
 /* #define S INSTRUCTION [SEP INSTRUCTION]* # */
-
-enum class TokenType
-{
-	Instruction,
-	Value,
-	N,
-	V,
-	Sep
-};
-
-class Token
-{
-	public:
-		Token(TokenType type, std::string str): _type(type), _str(str){};
-		std::string get_str(){ return _str;};
-		TokenType get_type(){ return _type;};
-	private:
-		TokenType _type;
-		std::string _str;
-		union content
-		{
-			std::shared_ptr<IOperand> op;
-			union func
-			{
-				void (*method)(void);
-				void (*f)(IOperand rhs);
-			};
-		};
-};
-
-
 #define VALUE \
-	"int8\\("   N "\\)|"\
-	"int16\\("  N "\\)|"\
-	"int32\\("  N "\\)|"\
-	"double\\(" Z "\\)|"\
-	"float\\("  Z "\\)|"
+	"int8\\(("   N ")\\)|"\
+	"int16\\(("  N ")\\)|"\
+	"int32\\(("  N ")\\)|"\
+	"double\\((" Z ")\\)|"\
+	"float\\(("  Z ")\\)|"
 
 #define INSTRUCTION \
 		"push"\
@@ -73,11 +42,13 @@ class Token
 	"|" "print"\
 	"|" "exit"
 
-#define N "[-]?[[:digit:]]+"
+#define N "[-]?[0-9]+"
 
-#define Z "[-]?[[:digit:]]+.[[:digit:]]+"
+#define Z "[-]?[0-9]+.[0-9]+"
 
 #define SEP "[\\n]+"
+
+#define TOKEN_PTR std::vector< std::shared_ptr<Token> >
 
 class 					Lexer
 {
@@ -88,8 +59,9 @@ class 					Lexer
 		Lexer(Lexer const &src);
 		Lexer 		&operator=(Lexer const & src);
 		void lex(std::string toParse);
+		TOKEN_PTR get_tokens(){return _tokens;};
 	private:
-		std::vector< std::shared_ptr<Token> > _tokens;
+		TOKEN_PTR _tokens;
 };
 /* std::ostream 		&operator<<(std::ostream & o, Lexer const & src); */
 
