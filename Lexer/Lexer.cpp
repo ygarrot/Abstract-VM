@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 16:04:05 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/19 16:42:50 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/20 10:44:29 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,6 @@ Lexer::Lexer(std::string target)
 
 Lexer::Lexer() 
 {
-	std::string Values = {
-	"int8\\("   N "\\)",
-	"int16\\("  N "\\)",
-	"int32\\("  N "\\)",
-	"double\\(" Z "\\)",
-	"float\\("  Z "\\)",
-	};
-	/* std::string Values.join("|"); */
 }
 
 Lexer::~Lexer() 
@@ -46,12 +38,39 @@ Lexer     &Lexer::operator=(Lexer const & src)
 	return *this;
 }
 
-void Lexer::Lex(std::string toParse)
+void Lexer::lex(std::string toParse)
 {
 	std::istringstream f(toParse);
+	std::ifstream fs;
+	std::string nl;
 	std::string s;
+	TokenType	token_type;
 
-	while (getline(f, s, ' ')) {
-		/* if ( */
+	fs.open (toParse);
+	if (fs.is_open())
+		std::cout << "file is open";
+	while (getline(fs, nl, '\n')) {
+		/* std::cout << s <<std::endl; */
+		std::stringstream ss(nl);
+		while (getline(ss, s, ' '))
+		{
+			if (regex_match(s, std::regex(INSTRUCTION)))
+			{
+				std::cout << "INSTR" << std::endl;
+				token_type = TokenType::Instruction;
+			}
+			else if (regex_match(s, std::regex(VALUE)))
+			{
+				std::cout << "VALUE" << std::endl;
+				token_type = TokenType::Value;
+			}
+			else
+			{
+				std::cout << "Error : [" << s<< "]" << std::endl;
+				/* token_type = token_type::Instruction; */
+			}
+			_tokens.push_back(std::shared_ptr<Token>(new Token(token_type, s)));
+		}
+		_tokens.push_back(std::shared_ptr<Token>(new Token(TokenType::Sep, s)));
 	}
 }
