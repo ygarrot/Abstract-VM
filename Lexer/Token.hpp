@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 12:13:55 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/20 15:26:39 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/20 15:42:47 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ class Token
 		TokenType get_type() const { return _type;};
 		union
 		{
-			std::shared_ptr<const IOperand *> op;
+			const IOperand * op;
 			union
 			{
 				public:

@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:37:19 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/20 15:11:45 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/20 15:43:17 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,7 @@ void Parser::parse()
 		switch (token->get_type())
 		{
 			case TokenType::Value:
-				token->op = std::make_shared<const IOperand * >(CreateOperand(token->get_str()));
-
+				token->op = CreateOperand(token->get_str());
 			case TokenType::Instruction:
 				setFunction(token.get());
 			default:
