@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/21 14:05:22 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/21 15:46:25 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ OP_PTR Computor::get_elem(size_t n)
 	if (_stack.size() < n)
 		;/* throw std::exception("empty stack"); */
 	OP_PTR ret(_stack.end() - n, _stack.end());
-	_stack.pop_back();
-	_stack.pop_back();
+	while (n--)
+	{
+		_stack.pop_back();
+	}
 	return ret;
 }
 
@@ -64,38 +66,38 @@ void	Computor::pop()
 
 void  Computor::add()
 {
-	OP_PTR tmp = get_elem(2);
-	push(*tmp[0] + *tmp[1]);
+	OP_PTR op = get_elem(2);
+	push(*op[0] + *op[1]);
 }
 
 void  Computor::sub()
 {
-	OP_PTR tmp = get_elem(2);
-	push(*tmp[0] - *tmp[1]);
+	OP_PTR op = get_elem(2);
+	push(*op[0] - *op[1]);
 }
 
 void  Computor::mul()
 {
-	OP_PTR tmp = get_elem(2);
-	push(*tmp[0] * *tmp[1]);
+	OP_PTR op = get_elem(2);
+	push(*op[0] * *op[1]);
 }
 
 void  Computor::div()
 {
-	OP_PTR tmp = get_elem(2);
-	push(*tmp[0] / *tmp[1]);
+	OP_PTR op = get_elem(2);
+	push(*op[0] / *op[1]);
 }
 
 void  Computor::mod()
 {
-	OP_PTR tmp = get_elem(2);
-	push(*tmp[0] % *tmp[1]);
+	OP_PTR op = get_elem(2);
+	push(*op[0] % *op[1]);
 }
 
 void  Computor::print()
 {
-	OP_PTR tmp = get_elem(1);
-	/* std::cout << static_cast<char>(tmp[0]->toString()); */
+	OP_PTR op = get_elem(1);
+	/* std::cout << static_cast<char>(op[0]->toString()); */
 }
 
 void	Computor::exit()
