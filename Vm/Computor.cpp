@@ -6,19 +6,19 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/21 13:21:50 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/21 14:05:22 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Computor.hpp"
 
-std::vector< IOperand const * > Computor::get_elem(size_t n)
+OP_PTR Computor::get_elem(size_t n)
 {
-	if (_vect.size() < n)
+	if (_stack.size() < n)
 		;/* throw std::exception("empty stack"); */
-	std::vector< IOperand const * > ret(_vect.end() - n, _vect.end());
-	_vect.pop_back();
-	_vect.pop_back();
+	OP_PTR ret(_stack.end() - n, _stack.end());
+	_stack.pop_back();
+	_stack.pop_back();
 	return ret;
 }
 
@@ -47,54 +47,54 @@ void		Computor::visit()
 void		Computor::ft_assert(IOperand const * op)
 {
 	check_stack();
-	_vect.push_back(op);
+	_stack.push_back(std::shared_ptr< const IOperand>(op));
 }
 
 void		Computor::push(IOperand const * op)
 {
 	check_stack();
-	_vect.push_back(op);
+	_stack.push_back(std::shared_ptr< const IOperand>(op));
 }
 
 void	Computor::pop()
 {
 	check_stack();
-	_vect.pop_back();
+	_stack.pop_back();
 }
 
 void  Computor::add()
 {
-	std::vector< IOperand const * > tmp = get_elem(2);
+	OP_PTR tmp = get_elem(2);
 	push(*tmp[0] + *tmp[1]);
 }
 
 void  Computor::sub()
 {
-	std::vector< IOperand const * > tmp = get_elem(2);
+	OP_PTR tmp = get_elem(2);
 	push(*tmp[0] - *tmp[1]);
 }
 
 void  Computor::mul()
 {
-	std::vector< IOperand const * > tmp = get_elem(2);
+	OP_PTR tmp = get_elem(2);
 	push(*tmp[0] * *tmp[1]);
 }
 
 void  Computor::div()
 {
-	std::vector< IOperand const * > tmp = get_elem(2);
+	OP_PTR tmp = get_elem(2);
 	push(*tmp[0] / *tmp[1]);
 }
 
 void  Computor::mod()
 {
-	std::vector< IOperand const * > tmp = get_elem(2);
+	OP_PTR tmp = get_elem(2);
 	push(*tmp[0] % *tmp[1]);
 }
 
 void  Computor::print()
 {
-	std::vector< IOperand const * > tmp = get_elem(1);
+	OP_PTR tmp = get_elem(1);
 	/* std::cout << static_cast<char>(tmp[0]->toString()); */
 }
 
@@ -104,10 +104,9 @@ void	Computor::exit()
 
 void  Computor::dump()
 {
-	std::cout << "dump" << std::endl;
-	for (IOperand const * op : _vect)
+	for (OP_PTR::iterator it = _stack.begin(); it != _stack.end(); ++it)
 	{
-		std::cout << op->toString(); 
+		std::cout << it->get()->toString(); 
 	}
 }
 

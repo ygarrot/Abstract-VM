@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:52 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/21 12:20:29 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/21 14:05:06 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 /* class IOperand; */
 
 class Token;
+#define OP_PTR std::vector< std::shared_ptr<const IOperand > > 
 #define TOKEN_PTR std::vector< std::shared_ptr<Token> >
 class Computor
 {
@@ -37,7 +38,7 @@ class Computor
 		Computor(std::string){};
 		Computor(Computor const & src){(void)src;};
 		~Computor(void){};
-		std::vector< IOperand const * > get_elem(size_t n);
+		OP_PTR get_elem(size_t n);
 		void		push(IOperand const * op);
 		void		pop();
 		void		dump();
@@ -54,7 +55,7 @@ class Computor
 		TOKEN_PTR get_tokens(){return _tokens;};
 		void set_tokens(TOKEN_PTR tokens){_tokens = tokens;};
 	private:
-		std::vector< const IOperand *> _vect;
+		OP_PTR _stack;
 		TOKEN_PTR	_tokens;
 };
 
