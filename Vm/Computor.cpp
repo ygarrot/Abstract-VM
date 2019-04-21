@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/21 13:06:14 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/21 13:21:50 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	Computor::exit()
 
 void  Computor::dump()
 {
+	std::cout << "dump" << std::endl;
 	for (IOperand const * op : _vect)
 	{
 		std::cout << op->toString(); 
