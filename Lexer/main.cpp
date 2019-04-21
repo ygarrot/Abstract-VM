@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 17:54:30 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/20 13:26:00 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/21 12:21:08 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@ int main()
 {
 	Lexer l;
 	Parser p;
+	Computor c;
+
 	l.lex("../example.avm");
 	p.set_tokens(l.get_tokens());
 	p.parse();
+	c.set_tokens(p.get_tokens());
+	c.visit();
 }

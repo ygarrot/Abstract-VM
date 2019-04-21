@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 16:04:05 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/20 15:42:51 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/21 13:04:05 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void Lexer::lex(std::string toParse)
 			if (regex_match(s, std::regex(INSTRUCTION)))
 			{
 				/* std::cout << "INSTR" << std::endl; */
+				/* std::cout << s <<std::endl; */
 				token_type = TokenType::Instruction;
 			}
 			else if (regex_match(s, std::regex(VALUE)))
@@ -69,10 +70,11 @@ void Lexer::lex(std::string toParse)
 			{
 				/* std::cout << "Error : [" << s<< "]" << std::endl; */
 				/* token_type = token_type::Instruction; */
+				continue;
 			}
 			_tokens.push_back(std::shared_ptr<Token>(new Token(token_type, s)));
 		}
-		_tokens.push_back(std::shared_ptr<Token>(new Token(TokenType::Sep, s)));
+		/* _tokens.push_back(std::shared_ptr<Token>(new Token(TokenType::Sep, s))); */
 	}
-	std::cout << _tokens.size() << std::endl;
+	/* std::cout << _tokens.size() << std::endl; */
 }

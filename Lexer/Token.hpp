@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 12:13:55 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/20 15:42:47 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/21 12:43:44 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "../Operand/IOperand.hpp"
 #include "../Vm/Computor.hpp"
+#include <map>
 #include <iostream>
 
 enum class TokenType
@@ -26,8 +27,11 @@ enum class TokenType
 	Sep
 };
 
-typedef void (Computor::*op_func)();
-typedef std::map<std::string, op_func> func_tab_t ;
+class Computor;
+/* std::function<int(B*nt)> fun = &B::func */
+/* typedef std::function< */
+typedef std::function<void(Computor*)> meth;
+typedef std::map<std::string, meth> func_tab_t;
 
 class Token
 {
@@ -37,19 +41,12 @@ class Token
 		void set_str(std::string str) { _str = str;};
 		void set_type(TokenType type) { _type = type;};
 		TokenType get_type() const { return _type;};
-		union
-		{
-			const IOperand * op;
-			union
-			{
-				public:
-				op_func method;
-				void (Computor::*f)(IOperand const * rhs);
-			};
-		};
+		const IOperand * op;
+		std::function<void(Computor*)> method;
+		std::function<void(Computor*, IOperand const * rhs)> f;
 	private:
-			TokenType _type;
-			std::string _str;
+		TokenType _type;
+		std::string _str;
 };
 
 

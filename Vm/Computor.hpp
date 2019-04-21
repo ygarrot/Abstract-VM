@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:52 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/20 15:11:40 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/21 12:20:29 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <vector>
 #include <exception>
 #include "../Operand/Int8.hpp"
+#include "../Lexer/Token.hpp"
 #include <functional>
 #include <map>
 #include <string>
@@ -26,6 +27,8 @@
 /* class TOperand; */
 /* class IOperand; */
 
+class Token;
+#define TOKEN_PTR std::vector< std::shared_ptr<Token> >
 class Computor
 {
 	public:
@@ -37,18 +40,22 @@ class Computor
 		std::vector< IOperand const * > get_elem(size_t n);
 		void		push(IOperand const * op);
 		void		pop();
-		void	dump();
+		void		dump();
 		void		ft_assert(IOperand const * op);
-		void	add();
-		void	sub();
-		void	mul();
-		void	div();
-		void	mod();
-		void	print();
-		void	exit();
-		void	check_stack(){};
+		void		add();
+		void		sub();
+		void		mul();
+		void		div();
+		void		mod();
+		void		print();
+		void		visit();
+		void		exit();
+		void		check_stack(){};
+		TOKEN_PTR get_tokens(){return _tokens;};
+		void set_tokens(TOKEN_PTR tokens){_tokens = tokens;};
 	private:
 		std::vector< const IOperand *> _vect;
+		TOKEN_PTR	_tokens;
 };
 
 #endif

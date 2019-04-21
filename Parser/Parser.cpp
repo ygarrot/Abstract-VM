@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:37:19 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/20 15:43:17 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/21 12:43:39 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ IOperand const *Parser::CreateOperand(std::string str) const
 }
 
 
-void	setFunction(Token * token)
+void	Parser::setFunction(Token * token)
 {
 	func_tab_t funcMap =
 	{
@@ -103,15 +103,18 @@ void	setFunction(Token * token)
 		{ "div", &Computor::div},
 		{ "mod", &Computor::mod},
 		{ "print", &Computor::print},
-		/* { "exit", &Computor::exit} */
+		{ "exit", &Computor::exit}
 	};
 	func_tab_t::iterator it = funcMap.find(token->get_str());
+	/* std::cout << */ 
 	if (it == funcMap.end())
 	{
+		/* std::cout << token->get_str() << std::endl; */
 		if (token->get_str().find("push"))
 			token->f = &Computor::push;
-		if (token->get_str().find("assert"))
+		else if (token->get_str().find("assert"))
 			token->f = &Computor::ft_assert;
+		return ;
 	}
 	token->method = funcMap.at(token->get_str());
 
@@ -125,8 +128,10 @@ void Parser::parse()
 		{
 			case TokenType::Value:
 				token->op = CreateOperand(token->get_str());
+				break;
 			case TokenType::Instruction:
 				setFunction(token.get());
+				break;
 			default:
 				;
 				/* return ; */

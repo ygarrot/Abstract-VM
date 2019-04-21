@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:36:35 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/20 15:06:47 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/21 12:20:46 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ class 					Parser
 		/* IOperand const * createInt32( std::string const & value ) const; */
 		/* IOperand const * createFloat( std::string const & value ) const; */
 		/* IOperand const * createDouble( std::string const & value ) const; */
+		TOKEN_PTR get_tokens(){return _tokens;};
 		void set_tokens(TOKEN_PTR tokens){_tokens = tokens;};
 	private:
 		TOKEN_PTR _tokens;
