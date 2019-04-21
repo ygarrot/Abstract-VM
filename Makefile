@@ -6,7 +6,7 @@
 #    By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/11 12:06:15 by ygarrot           #+#    #+#              #
-#    Updated: 2019/04/21 16:15:22 by ygarrot          ###   ########.fr        #
+#    Updated: 2019/04/21 16:18:33 by ygarrot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,11 +31,8 @@ INCDIR =  \
 
 SRC = \
 	  Lexer/Lexer.cpp\
-	  Lexer/regex.cpp\
 	  main.cpp\
 	  Operand/Int8.cpp\
-	  Operand/main.cpp\
-	  Operand/OperandFactory.cpp\
 	  Parser/Parser.cpp\
 	  Vm/Computor.cpp
 
@@ -59,6 +56,7 @@ INCS = $(addprefix -I, $(addsuffix /, $(INCDIR)))
 all: $(NAME)
 
 $(NAME): $(OBJS)
+	@$(CC) $(FLAGS) -o $(NAME) $(OBJS) $(INCS)
 	@echo "$(_CYAN)\nCompiling library $(NAME)... $(_GREEN)DONE$(_END)"
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
