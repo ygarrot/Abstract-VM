@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/22 16:19:39 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/22 16:22:40 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	Computor::check_stack(size_t size)
 {
 	if (_stack.size() < size)
-		throw EmptyStackException();
+		throw NotEnoughValueException();
 }
 
 OP_PTR Computor::get_elem(size_t n)
@@ -66,7 +66,8 @@ void		Computor::push(IOperand const * op)
 
 void	Computor::pop()
 {
-	check_stack(1);
+	if (_stack.size() < 1)
+		throw EmptyStackException();
 	_stack.pop_back();
 }
 
