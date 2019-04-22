@@ -6,16 +6,21 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/22 14:01:55 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/22 16:18:01 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Computor.hpp"
 
+void	Computor::check_stack(size_t size)
+{
+	if (_stack.size() < size)
+		throw EmptyStackException();
+}
+
 OP_PTR Computor::get_elem(size_t n)
 {
-	if (_stack.size() < n)
-		;/* throw std::exception("empty stack"); */
+	check_stack(n);
 	OP_PTR ret(_stack.end() - n, _stack.end());
 	while (n--)
 	{
@@ -47,10 +52,10 @@ void		Computor::visit()
 	}
 }
 
-void		Computor::ft_assert(IOperand const * op)
+void		Computor::ft_assert(IOperand const * v)
 {
-	check_stack();
-	_stack.push_back(std::shared_ptr< const IOperand>(op));
+	OP_PTR op = get_elem(1);
+	assert(op[0]->toString().compare(v->toString()));
 }
 
 void		Computor::push(IOperand const * op)
@@ -61,7 +66,7 @@ void		Computor::push(IOperand const * op)
 
 void	Computor::pop()
 {
-	check_stack();
+	check_stack(1);
 	_stack.pop_back();
 }
 

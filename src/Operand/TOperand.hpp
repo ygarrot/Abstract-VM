@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:09:14 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/22 15:47:56 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/22 15:51:41 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ class TOperand: public IOperand {
 			 void checkSubOverflow(B a, B b) const;
 		template<typename B>
 			 void checkModOverflow(B a, B b) const;
+		template<typename B>
+			 void checkDivOverflow(B a, B b) const;
 
 		virtual	IOperand const * operator+( IOperand const & rhs ) const;
 		virtual	IOperand const * operator-( IOperand const & rhs ) const;
@@ -103,11 +105,21 @@ int subOvf(T a, T b)
 
 template<typename T>
 template<typename B>
+void TOperand<T>::checkDivOverflow(B a, B b) const
+{ 
+	if ( (b == 0.0 || ( (a == std::numeric_limits<B>::max()) && (b == -1) ) ))
+	{
+		throw FloatingPointException(); 
+	}
+}
+
+template<typename T>
+template<typename B>
 void TOperand<T>::checkModOverflow(B a, B b) const
 { 
 	if ( (b == 0.0 || ( (a == std::numeric_limits<B>::max()) && (b == -1) ) ))
 	{
-		throw ValueUnderflowException(); 
+		throw FloatingPointException(); 
 	}
 }
 
@@ -189,6 +201,7 @@ template <typename T>
 IOperand const * TOperand<T>::operator/( IOperand const & rhs ) const
 {
 	TOperand<T> const & tmp = reinterpret_cast< const TOperand<T>& >(rhs);
+	checkDivOverflow(this->_n, tmp._n);
 	check_exceptions(tmp);
 	return new TOperand<T>(this->_n / tmp._n);
 }

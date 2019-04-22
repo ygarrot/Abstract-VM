@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:52 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/21 14:05:06 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/22 16:18:39 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #include <map>
 #include <string>
 #include <iostream>
+#include <assert.h>     /* assert */
 /* class TOperand; */
 /* class IOperand; */
 
@@ -51,7 +52,7 @@ class Computor
 		void		print();
 		void		visit();
 		void		exit();
-		void		check_stack(){};
+		void		check_stack(size_t size);
 		TOKEN_PTR get_tokens(){return _tokens;};
 		void set_tokens(TOKEN_PTR tokens){_tokens = tokens;};
 	private:
