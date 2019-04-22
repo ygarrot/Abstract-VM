@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:09:14 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/19 14:18:45 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/22 12:13:40 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ class TOperand: public IOperand {
 		virtual void	check_exceptions(TOperand const & rhs) const;
 		virtual	IOperand const * operator+( IOperand const & rhs ) const;
 		virtual	IOperand const * operator-( IOperand const & rhs ) const;
-		virtual	IOperand const * operator*( IOperand const & rhs ) const{(void)rhs;return new TOperand<T>();};
-		virtual	IOperand const * operator/( IOperand const & rhs ) const{(void)rhs;return new TOperand<T>();};
-		virtual	IOperand const * operator%( IOperand const & rhs ) const{(void)rhs;return new TOperand<T>();};
+		virtual	IOperand const * operator*( IOperand const & rhs ) const;
+		virtual	IOperand const * operator/( IOperand const & rhs ) const;
+		virtual	IOperand const * operator%( IOperand const & rhs ) const;
 		virtual	std::string const & toString( void ) const;
-	private:
+	protected:
 		std::string _str;
 		T _n;
 		eOperandType _type;
@@ -125,6 +125,32 @@ IOperand const * TOperand<T>::operator+( IOperand const & rhs ) const
 	TOperand<T> const & tmp = reinterpret_cast< const TOperand<T>& >(rhs);
 	check_exceptions(tmp);
 	return new TOperand<T>(this->_n + tmp._n);
+}
+
+template <typename T>
+IOperand const * TOperand<T>::operator*( IOperand const & rhs ) const
+{
+	TOperand<T> const & tmp = reinterpret_cast< const TOperand<T>& >(rhs);
+	/* check_exceptions(tmp); */
+	return new TOperand<T>(this->_n * tmp._n);
+}
+
+
+template <typename T>
+IOperand const * TOperand<T>::operator/( IOperand const & rhs ) const
+{
+	TOperand<T> const & tmp = reinterpret_cast< const TOperand<T>& >(rhs);
+	check_exceptions(tmp);
+	return new TOperand<T>(this->_n / tmp._n);
+}
+
+
+template <typename T>
+IOperand const * TOperand<T>::operator%( IOperand const & rhs ) const
+{
+	TOperand<T> const & tmp = reinterpret_cast< const TOperand<T>& >(rhs);
+	check_exceptions(tmp);
+	return new TOperand<T>(this->_n % tmp._n);
 }
 
 /* ... */

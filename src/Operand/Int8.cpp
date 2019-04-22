@@ -6,13 +6,37 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 15:13:56 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/03/22 15:14:06 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/22 11:46:49 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "Int8.hpp"
 
+Int8::Int8(std::string str) 
+{
+	_n = stoi(str);
+	_str = std::to_string(_n);
+}
+
+Int8::~Int8() 
+{
+
+}
+
+Int8::Int8(Int8 const &src)
+{
+	*this = src;
+}
+
+Int8     &Int8::operator=(Int8 const & src) 
+{
+	(void)src;
+	return *this;
+}
+
+Int8::Int8(int type):TOperand(type){};
+Int8::Int8(void):TOperand(){};
 /* IOperand const * Int8::operator+( IOperand const & rhs ) const */
 /* { */
 	/* return new Int8(this->toString() + rhs.toString()); */

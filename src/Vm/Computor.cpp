@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/21 15:46:25 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/22 12:07:20 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void		Computor::visit()
 			case TokenType::Instruction:
 				if (it + 1 != _tokens.end() && (it + 1)->get()->get_type() != TokenType::Instruction)
 				{
+					/* std::cout << token->get_str() << std::endl; */
 					++it;
 					token->f(this, it->get()->op);
 				}
@@ -54,6 +55,8 @@ void		Computor::ft_assert(IOperand const * op)
 
 void		Computor::push(IOperand const * op)
 {
+	/* std::cout << "real push \n" ; */
+	/* std::cout << op->toString() << std::endl; */
 	check_stack();
 	_stack.push_back(std::shared_ptr< const IOperand>(op));
 }
@@ -79,6 +82,9 @@ void  Computor::sub()
 void  Computor::mul()
 {
 	OP_PTR op = get_elem(2);
+	std::cout << "mul\n";
+	std::cout << (*op[1]).toString();
+	*op[0] * *op[1];
 	push(*op[0] * *op[1]);
 }
 
@@ -106,9 +112,10 @@ void	Computor::exit()
 
 void  Computor::dump()
 {
+	std::cout << "dump\n";
 	for (OP_PTR::iterator it = _stack.begin(); it != _stack.end(); ++it)
 	{
-		std::cout << it->get()->toString(); 
+		std::cout << it->get()->toString() << "\n"; 
 	}
 }
 

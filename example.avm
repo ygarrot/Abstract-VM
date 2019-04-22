@@ -1,7 +1,3 @@
--------------
-; sample.avm -
-; -------------
-
 push int8(42)
 push int8(33)
 add
@@ -10,6 +6,4 @@ mul
 push int8(42)
 push int8(42)
 dump
-pop
-assert int8(42)
 exit

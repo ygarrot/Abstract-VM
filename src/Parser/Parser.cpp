@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:37:19 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/22 11:05:15 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/22 11:44:25 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ Parser     &Parser::operator=(Parser const & src)
 
 IOperand const * Parser::createOperand( eOperandType type, std::string const & value ) const
 {
-	std::cout << static_cast<int>(type) << std::endl;
+	/* std::cout << static_cast<int>(type) << std::endl; */
 	IOperand const * (Parser::*f[5])(std::string const & value) const = {
 		&Parser::createInt8,
 		/* &Parser::createInt16, */
@@ -101,13 +101,13 @@ void	Parser::setFunction(Token * token)
 		{ "exit", &Computor::exit}
 	};
 	func_tab_t::iterator it = funcMap.find(token->get_str());
-	/* std::cout << */ 
 	if (it == funcMap.end())
 	{
-		/* std::cout << token->get_str() << std::endl; */
-		if (token->get_str().find("push"))
+		if (!token->get_str().compare("push"))
+		{
 			token->f = &Computor::push;
-		else if (token->get_str().find("assert"))
+		}
+		else if (!token->get_str().compare("assert"))
 			token->f = &Computor::ft_assert;
 		return ;
 	}
