@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/22 12:07:20 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/22 14:01:55 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,7 @@ void		Computor::ft_assert(IOperand const * op)
 
 void		Computor::push(IOperand const * op)
 {
-	/* std::cout << "real push \n" ; */
-	/* std::cout << op->toString() << std::endl; */
-	check_stack();
+	/* check_stack(); */
 	_stack.push_back(std::shared_ptr< const IOperand>(op));
 }
 
@@ -82,9 +80,6 @@ void  Computor::sub()
 void  Computor::mul()
 {
 	OP_PTR op = get_elem(2);
-	std::cout << "mul\n";
-	std::cout << (*op[1]).toString();
-	*op[0] * *op[1];
 	push(*op[0] * *op[1]);
 }
 
@@ -112,7 +107,7 @@ void	Computor::exit()
 
 void  Computor::dump()
 {
-	std::cout << "dump\n";
+	/* std::cout << "dump\n"; */
 	for (OP_PTR::iterator it = _stack.begin(); it != _stack.end(); ++it)
 	{
 		std::cout << it->get()->toString() << "\n"; 

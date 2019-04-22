@@ -6,7 +6,7 @@
 #    By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/11 12:06:15 by ygarrot           #+#    #+#              #
-#    Updated: 2019/04/22 12:14:46 by ygarrot          ###   ########.fr        #
+#    Updated: 2019/04/22 13:01:16 by ygarrot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ INCDIR =  \
 		  src/Vm\
 
 SRC = \
+	  Exceptions/Exceptions.cpp\
 	  Lexer/Lexer.cpp\
 	  main.cpp\
 	  Operand/Int8.cpp\

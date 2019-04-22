@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 13:17:04 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/22 11:20:19 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/22 15:10:35 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ class Int8: public TOperand<int>
 		/* eOperandType getType( void ){}; // Type of the instance */
 		/* virtual void check_exceptions(IOperand const & rhs); */
 		/* virtual void check_underflow(IOperand const & rhs); */
-		/* virtual void check_overflow(IOperand const & rhs); */
+		/* virtual void checkAddoverflow(IOperand const & rhs); */
 		Int8(void);
 		Int8(std::string);
 		Int8(int type);
@@ -35,5 +35,6 @@ class Int8: public TOperand<int>
 	private:
 };
 
+		/* void checkAddoverflow(IOperand const & rhs); */
 
 #endif
