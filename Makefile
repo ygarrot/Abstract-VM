@@ -6,7 +6,7 @@
 #    By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/11 12:06:15 by ygarrot           #+#    #+#              #
-#    Updated: 2019/04/21 16:18:33 by ygarrot          ###   ########.fr        #
+#    Updated: 2019/04/22 10:45:41 by ygarrot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ NAME = vm
 CC = clang++
 CFLAGS = -Wall -Wextra -Werror
 CFLAGS += -g3 -std=c++11
-# CFLAGS += -fsanitize=address,undefined
+CFLAGS += -fsanitize=address,undefined
 
 SRCDIR = src
 OBJDIR = obj
@@ -56,7 +56,7 @@ INCS = $(addprefix -I, $(addsuffix /, $(INCDIR)))
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(CC) $(FLAGS) -o $(NAME) $(OBJS) $(INCS)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(INCS)
 	@echo "$(_CYAN)\nCompiling library $(NAME)... $(_GREEN)DONE$(_END)"
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
@@ -67,10 +67,10 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 
 clean:
 	@echo "$(_RED)Removed objects (.o) files.$(_END)"
-	@/bin/rm -f $(OBJS)
+	@/bin/rm -rf obj
 
 fclean: clean
-	@echo "$(_RED)Removed library ($(NAME)).$(_END)"
+	@echo "$(_RED)Removed ($(NAME)).$(_END)"
 	@/bin/rm -f $(NAME)
 
 re:

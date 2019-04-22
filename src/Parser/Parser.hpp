@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:36:35 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/21 12:20:46 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/22 11:04:55 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,6 @@
 #include <stdexcept>
 
 class Int8;
-typedef struct s_op_type
-{
-	eOperandType type;
-	std::string regex;
-}				t_optype;
 
 class 					Parser
 {

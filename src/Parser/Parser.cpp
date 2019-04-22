@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:37:19 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/21 12:43:39 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/22 11:05:15 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ Parser     &Parser::operator=(Parser const & src)
 
 IOperand const * Parser::createOperand( eOperandType type, std::string const & value ) const
 {
+	std::cout << static_cast<int>(type) << std::endl;
 	IOperand const * (Parser::*f[5])(std::string const & value) const = {
 		&Parser::createInt8,
 		/* &Parser::createInt16, */
@@ -47,6 +48,7 @@ IOperand const * Parser::createOperand( eOperandType type, std::string const & v
 		/* &Parser::createFloat, */
 		/* &Parser::createDouble, */
 	};
+	(void)type;
 	return (this->*f[type])(value);
 }
 
@@ -67,26 +69,19 @@ IOperand const *Parser::CreateOperand(std::string str) const
 {
 	eOperandType type;
 	std::smatch match;
-	t_optype dic_type[] = {
-		{.regex = "int8", .type = INT8},
-		{.regex = "int16", .type = INT16},
-		{.regex = "int8", .type = INT32},
-		{.regex = "float", .type = FLOAT},
-		{.regex = "double", .type = DOUBLE},
+	std::map<std::string, eOperandType> dic_type= {
+		{"int8",  INT8},
+		{"int16",  INT16},
+		{"int32",  INT32},
+		{"float",  FLOAT},
+		{"double", DOUBLE},
 	};
 
 	if (!regex_match(str, match, std::regex(NUM)))
 	{
 		std::cout << "regex no match";
 	}
-	for (t_optype elem: dic_type)
-	{
-		if (str.find(elem.regex))
-		{
-			type = elem.type;
-			break;
-		}
-	}
+	type = dic_type[match[1].str()];
 	return createOperand(type, match[2].str());
 }
 
