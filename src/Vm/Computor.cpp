@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/22 16:18:01 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/22 16:19:39 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void		Computor::visit()
 void		Computor::ft_assert(IOperand const * v)
 {
 	OP_PTR op = get_elem(1);
-	assert(op[0]->toString().compare(v->toString()));
+	assert(!op[0]->toString().compare(v->toString()));
 }
 
 void		Computor::push(IOperand const * op)
