@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:37:19 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/22 14:23:01 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/23 16:43:39 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,12 @@ Parser     &Parser::operator=(Parser const & src)
 
 IOperand const * Parser::createOperand( eOperandType type, std::string const & value ) const
 {
-	/* std::cout << static_cast<int>(type) << std::endl; */
 	IOperand const * (Parser::*f[5])(std::string const & value) const = {
 		&Parser::createInt8,
-		/* &Parser::createInt16, */
-		/* &Parser::createInt32, */
-		/* &Parser::createFloat, */
-		/* &Parser::createDouble, */
+		&Parser::createInt16,
+		&Parser::createInt32,
+		&Parser::createFloat,
+		&Parser::createDouble,
 	};
 	(void)type;
 	return (this->*f[type])(value);
@@ -57,11 +56,25 @@ IOperand const * Parser::createInt8( std::string const & value ) const
 	return new Int8(value);
 }
 
-/* IOperand const * Parser::createInt16( std::string const & value ) const{} */
-/* IOperand const * Parser::createInt32( std::string const & value ) const; */
-/* IOperand const * Parser::createFloat( std::string const & value ) const; */
-/* IOperand const * Parser::createDouble( std::string const & value ) const; */
+IOperand const * Parser::createInt16( std::string const & value ) const
+{
+	return new Int16(value);
+}
 
+IOperand const * Parser::createInt32( std::string const & value ) const
+{
+	return new Int32(value);
+}
+
+IOperand const * Parser::createFloat( std::string const & value ) const
+{
+	return new Float(value);
+}
+
+IOperand const * Parser::createDouble( std::string const & value ) const
+{
+	return new Double(value);
+}
 
 #define NUM "(.*)\\((.*)\\)(.*)"
 
@@ -112,7 +125,6 @@ void	Parser::setFunction(Token * token)
 		return ;
 	}
 	token->method = funcMap.at(token->get_str());
-
 }
 
 void Parser::parse()
