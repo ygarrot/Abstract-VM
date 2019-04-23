@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:09:14 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/23 15:48:32 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/23 15:58:21 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,9 +199,7 @@ IOperand const * TOperand<T>::operator+( IOperand const & rhs ) const
 	TOperand<T> const & tmp = reinterpret_cast< const TOperand<T>& >(rhs);
 
 	auto t = get_highest_prec(tmp);
-	(void)t;
-	/* std::function<void(TOperand<T>*, int a, int b)> meth = &TOperand<T>::checkAddOverflow<decltype(t)>; */
-void (TOperand<T>::*f)( int a, int) const = &TOperand<T>::checkAddOverflow;
+	void (TOperand<T>::*f)( decltype(t), decltype(t)) const = &TOperand<T>::checkAddOverflow;
 	auto [a, b] = check_exceptions(tmp, f);
 	return new TOperand<T>(a + b);
 }
