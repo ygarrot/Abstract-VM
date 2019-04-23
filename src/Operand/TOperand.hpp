@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:09:14 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/23 15:58:21 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/23 16:01:24 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,9 +187,9 @@ template <typename T>
 IOperand const * TOperand<T>::operator-( IOperand const & rhs ) const
 {
 	TOperand<T> const & tmp = reinterpret_cast< const TOperand<T>& >(rhs);
-
-	checkSubOverflow(this->_n, tmp._n);
-	/* check_exceptions(tmp); */
+	auto t = get_highest_prec(tmp);
+	void (TOperand<T>::*f)( decltype(t), decltype(t)) const = &TOperand<T>::checkSubOverflow;
+	auto [a, b] = check_exceptions(tmp, f);
 	return (new TOperand<T>(this->_n - tmp._n));
 }
 
@@ -208,8 +208,9 @@ template <typename T>
 IOperand const * TOperand<T>::operator*( IOperand const & rhs ) const
 {
 	TOperand<T> const & tmp = reinterpret_cast< const TOperand<T>& >(rhs);
-	checkMulOverflow(this->_n, tmp._n);
-	/* check_exceptions(tmp); */
+	auto t = get_highest_prec(tmp);
+	void (TOperand<T>::*f)( decltype(t), decltype(t)) const = &TOperand<T>::checkMulOverflow;
+	auto [a, b] = check_exceptions(tmp, f);
 	return new TOperand<T>(this->_n * tmp._n);
 }
 
@@ -218,8 +219,9 @@ template <typename T>
 IOperand const * TOperand<T>::operator/( IOperand const & rhs ) const
 {
 	TOperand<T> const & tmp = reinterpret_cast< const TOperand<T>& >(rhs);
-	checkDivOverflow(this->_n, tmp._n);
-	/* check_exceptions(tmp); */
+	auto t = get_highest_prec(tmp);
+	void (TOperand<T>::*f)( decltype(t), decltype(t)) const = &TOperand<T>::checkDivOverflow;
+	auto [a, b] = check_exceptions(tmp, f);
 	return new TOperand<T>(this->_n / tmp._n);
 }
 
@@ -228,8 +230,9 @@ template <typename T>
 IOperand const * TOperand<T>::operator%( IOperand const & rhs ) const
 {
 	TOperand<T> const & tmp = reinterpret_cast< const TOperand<T>& >(rhs);
-	checkModOverflow(this->_n, tmp._n);
-	/* check_exceptions(tmp); */
+	auto t = get_highest_prec(tmp);
+	void (TOperand<T>::*f)( decltype(t), decltype(t)) const = &TOperand<T>::checkModOverflow;
+	auto [a, b] = check_exceptions(tmp, f);
 	return new TOperand<T>(this->_n % tmp._n);
 }
 
