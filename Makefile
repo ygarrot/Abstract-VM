@@ -6,7 +6,7 @@
 #    By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/11 12:06:15 by ygarrot           #+#    #+#              #
-#    Updated: 2019/04/22 13:01:16 by ygarrot          ###   ########.fr        #
+#    Updated: 2019/04/23 15:14:24 by ygarrot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ NAME = vm
 
 CC = clang++
 CFLAGS = -Wall -Wextra -Werror
-CFLAGS += -g3 -std=c++11
+CFLAGS += -g3 -std=c++1z
 CFLAGS += -fsanitize=address,undefined
 
 SRCDIR = src
