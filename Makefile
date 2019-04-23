@@ -6,7 +6,7 @@
 #    By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/11 12:06:15 by ygarrot           #+#    #+#              #
-#    Updated: 2019/04/23 15:14:24 by ygarrot          ###   ########.fr        #
+#    Updated: 2019/04/23 16:47:38 by ygarrot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,10 @@ SRC = \
 	  Lexer/Lexer.cpp\
 	  main.cpp\
 	  Operand/Int8.cpp\
+	  Operand/Int16.cpp\
+	  Operand/Int32.cpp\
+	  Operand/Float.cpp\
+	  Operand/Double.cpp\
 	  Parser/Parser.cpp\
 	  Vm/Computor.cpp
 
