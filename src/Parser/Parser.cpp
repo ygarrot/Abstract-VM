@@ -6,11 +6,13 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:37:19 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/23 16:43:39 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/25 11:11:53 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Parser.hpp"
+OperandFactory OpFactory;
+extern OperandFactory OpFactory;
 
 Parser::Parser(std::string target) 
 {
@@ -37,68 +39,6 @@ Parser     &Parser::operator=(Parser const & src)
 	(void)src;
 	return *this;
 }
-
-IOperand const * Parser::createOperand( eOperandType type, std::string const & value ) const
-{
-	IOperand const * (Parser::*f[5])(std::string const & value) const = {
-		&Parser::createInt8,
-		&Parser::createInt16,
-		&Parser::createInt32,
-		&Parser::createFloat,
-		&Parser::createDouble,
-	};
-	(void)type;
-	return (this->*f[type])(value);
-}
-
-IOperand const * Parser::createInt8( std::string const & value ) const
-{
-	return new Int8(value);
-}
-
-IOperand const * Parser::createInt16( std::string const & value ) const
-{
-	return new Int16(value);
-}
-
-IOperand const * Parser::createInt32( std::string const & value ) const
-{
-	return new Int32(value);
-}
-
-IOperand const * Parser::createFloat( std::string const & value ) const
-{
-	return new Float(value);
-}
-
-IOperand const * Parser::createDouble( std::string const & value ) const
-{
-	return new Double(value);
-}
-
-#define NUM "(.*)\\((.*)\\)(.*)"
-
-IOperand const *Parser::CreateOperand(std::string str) const
-{
-	eOperandType type;
-	std::smatch match;
-	std::map<std::string, eOperandType> dic_type= {
-		{"int8",  INT8},
-		{"int16",  INT16},
-		{"int32",  INT32},
-		{"float",  FLOAT},
-		{"double", DOUBLE},
-	};
-
-	if (!regex_match(str, match, std::regex(NUM)))
-	{
-		std::cout << "regex no match";
-	}
-	type = dic_type[match[1].str()];
-	return createOperand(type, match[2].str());
-}
-
-
 void	Parser::setFunction(Token * token)
 {
 	func_tab_t funcMap =
@@ -134,7 +74,7 @@ void Parser::parse()
 		switch (token->get_type())
 		{
 			case TokenType::Value:
-				token->op = CreateOperand(token->get_str());
+				token->op = OpFactory.CreateOperand(token->get_str());
 				break;
 			case TokenType::Instruction:
 				setFunction(token.get());
@@ -142,7 +82,6 @@ void Parser::parse()
 			default:
 				;
 				/* return ; */
-
 		}
 	}
 }

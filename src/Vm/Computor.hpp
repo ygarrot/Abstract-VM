@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:52 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/22 16:18:39 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/26 10:21:53 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,13 @@
 #include <iostream>
 #include <vector>
 #include <exception>
-#include "../Operand/Int8.hpp"
+#include "../Exceptions/Exceptions.hpp"
 #include "../Lexer/Token.hpp"
 #include <functional>
 #include <map>
 #include <string>
 #include <iostream>
 #include <assert.h>     /* assert */
-/* class TOperand; */
-/* class IOperand; */
 
 class Token;
 #define OP_PTR std::vector< std::shared_ptr<const IOperand > > 

@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:09:14 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/23 16:49:13 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/26 10:22:22 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,15 @@
 #include <cfenv>
 #include <iostream>
 #include <cmath>
-#include "Exceptions.hpp"
-#include "IOperand.hpp"
 #include <cstdint>
 
-#include "boost/variant.hpp"
-
+/* #include "OperandFactory.hpp" */
+#include "../Exceptions/Exceptions.hpp"
+#include "IOperand.hpp"
 
 template<typename T>
 class TOperand: public IOperand {
 	public:
-		/* template<typename B> */
-		/* typedef std::function<void(TOperand<T>*, B a, B b)> overFlowPtr; */
 		IOperand &operator=(IOperand const & src);
 		TOperand(){};
 		TOperand(std::string){};
@@ -55,9 +52,11 @@ class TOperand: public IOperand {
 		template<typename B>
 			 void checkDivOverflow(B a, B b) const;
 
-		auto get_highest_prec(TOperand<T> const & rhs) const
-	   	{ return (rhs._type > this->_type) ? rhs._n : this->_n ; };
+		auto get_highest_prec(TOperand<T> const & rhs) const;
+		/* auto get_highest_class(TOperand<T> const & rhs) const; */
 
+		template<typename B>
+		IOperand const * CreateOperand(B value) const;
 
 		virtual	IOperand const * operator+( IOperand const & rhs ) const;
 		virtual	IOperand const * operator-( IOperand const & rhs ) const;
@@ -66,10 +65,25 @@ class TOperand: public IOperand {
 		virtual	IOperand const * operator%( IOperand const & rhs ) const;
 		virtual	std::string const & toString( void ) const;
 	protected:
+		/* C _base_class; */
 		std::string _str;
 		T _n;
 		eOperandType _type;
+		std::string _customType;
 };
+
+	template<typename T>
+auto TOperand<T>::get_highest_prec(TOperand<T> const & rhs) const
+{
+	std::cout << typeid(this).name() << "\n";
+	return (rhs._type > this->_type) ? rhs._n : this->_n ; 
+};
+
+/* template<typename T> */
+/* auto TOperand<T>::get_highest_class(IOperand const & rhs) const */
+/* { */
+/* 	return (reinterpret_cast< const TOperand<T> & >(rhs)._type > this->_type) ? rhs : this ; */ 
+/* }; */
 
 	template<typename T>
 IOperand &TOperand<T>::operator=(IOperand const & src)
@@ -184,17 +198,24 @@ std::ostream & operator<<(std::ostream & o, TOperand<T> const & rhs)
 	return o;
 }
 
-template <typename T>
+template<typename T>
+template<typename B>
+IOperand const * TOperand<T>::CreateOperand(B value) const
+{
+	return new TOperand<T>(value);
+}
+
+template<typename T>
 IOperand const * TOperand<T>::operator-( IOperand const & rhs ) const
 {
 	TOperand<T> const & tmp = reinterpret_cast< const TOperand<T>& >(rhs);
 	auto t = get_highest_prec(tmp);
 	void (TOperand<T>::*f)( decltype(t), decltype(t)) const = &TOperand<T>::checkSubOverflow;
 	auto [a, b] = check_exceptions(tmp, f);
-	return (new TOperand<T>(this->_n - tmp._n));
+	return CreateOperand<decltype(t)>(a + b);
 }
 
-template <typename T>
+template<typename T>
 IOperand const * TOperand<T>::operator+( IOperand const & rhs ) const
 {
 	TOperand<T> const & tmp = reinterpret_cast< const TOperand<T>& >(rhs);
@@ -202,39 +223,39 @@ IOperand const * TOperand<T>::operator+( IOperand const & rhs ) const
 	auto t = get_highest_prec(tmp);
 	void (TOperand<T>::*f)( decltype(t), decltype(t)) const = &TOperand<T>::checkAddOverflow;
 	auto [a, b] = check_exceptions(tmp, f);
-	return new TOperand<T>(a + b);
+	return CreateOperand<decltype(t)>(a + b);
 }
 
-template <typename T>
+template<typename T>
 IOperand const * TOperand<T>::operator*( IOperand const & rhs ) const
 {
 	TOperand<T> const & tmp = reinterpret_cast< const TOperand<T>& >(rhs);
 	auto t = get_highest_prec(tmp);
 	void (TOperand<T>::*f)( decltype(t), decltype(t)) const = &TOperand<T>::checkMulOverflow;
 	auto [a, b] = check_exceptions(tmp, f);
-	return new TOperand<T>(this->_n * tmp._n);
+	return CreateOperand<decltype(t)>(a * b);
 }
 
 
-template <typename T>
+template<typename T>
 IOperand const * TOperand<T>::operator/( IOperand const & rhs ) const
 {
 	TOperand<T> const & tmp = reinterpret_cast< const TOperand<T>& >(rhs);
 	auto t = get_highest_prec(tmp);
 	void (TOperand<T>::*f)( decltype(t), decltype(t)) const = &TOperand<T>::checkDivOverflow;
 	auto [a, b] = check_exceptions(tmp, f);
-	return new TOperand<T>(this->_n / tmp._n);
+	return CreateOperand<decltype(t)>(a / b);
 }
 
 
-template <typename T>
+template<typename T>
 IOperand const * TOperand<T>::operator%( IOperand const & rhs ) const
 {
 	TOperand<T> const & tmp = reinterpret_cast< const TOperand<T>& >(rhs);
 	auto t = get_highest_prec(tmp);
 	void (TOperand<T>::*f)( decltype(t), decltype(t)) const = &TOperand<T>::checkModOverflow;
 	auto [a, b] = check_exceptions(tmp, f);
-	return new TOperand<T>(fmod(this->_n , tmp._n));
+	return CreateOperand<decltype(t)>(fmod(a, b));
 }
 
 /* ... */

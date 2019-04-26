@@ -6,18 +6,14 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:36:35 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/23 16:42:58 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/26 10:00:11 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_HPP
 #define PARSER_HPP
 
-#include "../Operand/Int8.hpp"
-#include "../Operand/Int16.hpp"
-#include "../Operand/Int32.hpp"
-#include "../Operand/Float.hpp"
-#include "../Operand/Double.hpp"
+#include "../Operand/OperandFactory.hpp"
 #include "../Lexer/Lexer.hpp"
 #include <iostream>
 #include <vector>
@@ -39,12 +35,6 @@ class 					Parser
 		IOperand const *CreateOperand(std::string str) const;
 		void	setFunction(Token * token);
 		void	parse();
-		IOperand const * createOperand( eOperandType type, std::string const & value ) const;
-		IOperand const * createInt8( std::string const & value ) const;
-		IOperand const * createInt16( std::string const & value ) const;
-		IOperand const * createInt32( std::string const & value ) const;
-		IOperand const * createFloat( std::string const & value ) const;
-		IOperand const * createDouble( std::string const & value ) const;
 		TOKEN_PTR get_tokens(){return _tokens;};
 		void set_tokens(TOKEN_PTR tokens){_tokens = tokens;};
 	private:
