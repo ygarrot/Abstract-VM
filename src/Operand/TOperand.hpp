@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:09:14 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/26 10:22:22 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/27 12:40:23 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,49 +14,78 @@
 #ifndef ABSTRACT_VM_TOPERAND_HPP
 #define ABSTRACT_VM_TOPERAND_HPP
 
+class OperandFactory;
+template<typename T>
+class TOperand;
 #include <cfenv>
 #include <iostream>
 #include <cmath>
 #include <cstdint>
 
-/* #include "OperandFactory.hpp" */
-#include "../Exceptions/Exceptions.hpp"
 #include "IOperand.hpp"
+
+enum eFunctionType
+{
+	ADD,
+	SUB,
+	MULT,
+	DIV,
+	MOD,
+};
+
+class OperandFactory
+{
+	public:
+		IOperand const * createOperand(std::string str) const;
+		IOperand const * createOperand( eOperandType type, std::string const & value ) const;
+	private:
+		IOperand const * createInt8( std::string const & value ) const;
+		IOperand const * createInt16( std::string const & value ) const;
+		IOperand const * createInt32( std::string const & value ) const;
+		IOperand const * createFloat( std::string const & value ) const;
+		IOperand const * createDouble( std::string const & value ) const;
+};
+static const OperandFactory OpFactory;
+
+#include "OperandFactory.hpp"
+#include "../Exceptions/Exceptions.hpp"
 
 template<typename T>
 class TOperand: public IOperand {
 	public:
 		IOperand &operator=(IOperand const & src);
 		TOperand(){};
-		TOperand(std::string){};
 		TOperand(std::string str, T value, eOperandType type) : _str(str), _n(value), _type(type){};
-		TOperand(T type){this->_n = type; this->_str = std::to_string(this->_n); };
 		TOperand(TOperand const & src){(void)src;};
 		~TOperand(void){};
-		T		get_value(void) const {/*std::cout <<this->_n ;*/return this->_n;};
+		T		get_value(void) const {return this->_n;};
 		virtual	int getPrecision( void ) const;
 		virtual	eOperandType getType( void ) const;
 
 		template<typename B>
-		std::pair<B, B>	check_exceptions(TOperand const & rhs,
-				void (TOperand<T>::*f)( B a, B b) const) const;
+			void	check_exceptions(B a, B b,
+					void (TOperand<T>::*f)( B a, B b) const) const;
 
 		template<typename B>
 			void checkAddOverflow(B a, B b) const;
 		template<typename B>
-			 void checkMulOverflow(B a, B b) const;
+			void checkMulOverflow(B a, B b) const;
 		template<typename B>
-			 void checkSubOverflow(B a, B b) const;
+			void checkSubOverflow(B a, B b) const;
 		template<typename B>
-			 void checkModOverflow(B a, B b) const;
+			void checkModOverflow(B a, B b) const;
 		template<typename B>
-			 void checkDivOverflow(B a, B b) const;
+			void checkDivOverflow(B a, B b) const;
 
 		auto get_highest_prec(TOperand<T> const & rhs) const;
-		/* auto get_highest_class(TOperand<T> const & rhs) const; */
+		template<typename B>
+			std::pair<B, B> get_type(IOperand const & op) const;
 
 		template<typename B>
-		IOperand const * CreateOperand(B value) const;
+			IOperand const * CreateOperand(eOperandType type, B value) const;
+		template<typename B>
+		IOperand const * apply_func(eOperandType operandType, eFunctionType functionType, B a, B b) const;
+		IOperand const * choose_type( IOperand const & rhs, eFunctionType functionType) const;
 
 		virtual	IOperand const * operator+( IOperand const & rhs ) const;
 		virtual	IOperand const * operator-( IOperand const & rhs ) const;
@@ -64,26 +93,34 @@ class TOperand: public IOperand {
 		virtual	IOperand const * operator/( IOperand const & rhs ) const;
 		virtual	IOperand const * operator%( IOperand const & rhs ) const;
 		virtual	std::string const & toString( void ) const;
-	protected:
-		/* C _base_class; */
 		std::string _str;
 		T _n;
 		eOperandType _type;
-		std::string _customType;
+	protected:
 };
 
-	template<typename T>
-auto TOperand<T>::get_highest_prec(TOperand<T> const & rhs) const
+template<typename T>
+template<typename B>
+std::pair<B, B> TOperand<T>::get_type(IOperand const & op) const
 {
-	std::cout << typeid(this).name() << "\n";
-	return (rhs._type > this->_type) ? rhs._n : this->_n ; 
-};
+	if (op.getType() == INT8)
+		return std::make_pair(static_cast<B>(this->_n), static_cast<B>(stoi(op.toString())));
+	if (op.getType() == INT16)
+		return std::make_pair(static_cast<B>(this->_n), static_cast<B>(stoi(op.toString())));
+	if (op.getType() == INT32)
+		return std::make_pair(static_cast<B>(this->_n), static_cast<B>(stoi(op.toString())));
+	if (op.getType() == FLOAT)
+		return std::make_pair(static_cast<B>(this->_n), static_cast<B>(stof(op.toString())));
+	return std::make_pair(static_cast<B>(this->_n), static_cast<B>(stod(op.toString())));
+}
 
-/* template<typename T> */
-/* auto TOperand<T>::get_highest_class(IOperand const & rhs) const */
-/* { */
-/* 	return (reinterpret_cast< const TOperand<T> & >(rhs)._type > this->_type) ? rhs : this ; */ 
-/* }; */
+
+template<typename T>
+template<typename B>
+IOperand const * TOperand<T>::CreateOperand(eOperandType type, B value) const
+{
+	return OpFactory.createOperand(type, std::to_string(value));
+}
 
 	template<typename T>
 IOperand &TOperand<T>::operator=(IOperand const & src)
@@ -180,15 +217,12 @@ void TOperand<T>::checkAddOverflow(B a, B b) const
 
 template<typename T>
 template<typename B>
-std::pair<B, B>	TOperand<T>::check_exceptions(TOperand const & rhs,
+void	TOperand<T>::check_exceptions(B a, B b,
 		void (TOperand<T>::*meth) (B a, B b)const) const
 {
-	if (!std::isnormal(this->_n) || !std::isnormal(rhs._n))
+	if (!std::isnormal(b) || !std::isnormal(b))
 		;
-	B a = static_cast< B >(this->_n);
-	B b = static_cast< B >(rhs._n);
 	(this->*meth)(a, b);
-	return std::make_pair(a, b);
 }
 
 	template<typename T>
@@ -200,62 +234,85 @@ std::ostream & operator<<(std::ostream & o, TOperand<T> const & rhs)
 
 template<typename T>
 template<typename B>
-IOperand const * TOperand<T>::CreateOperand(B value) const
+IOperand const * TOperand<T>::apply_func(eOperandType operandType, eFunctionType functionType, B a, B b) const
 {
-	return new TOperand<T>(value);
+	switch (functionType)
+	{
+		case ADD:
+			check_exceptions(a, b, &TOperand<T>::checkAddOverflow<B>);
+			return CreateOperand<B>(operandType, a + b);
+		case SUB:
+			check_exceptions(a, b, &TOperand<T>::checkSubOverflow<B>);
+			return CreateOperand<B>(operandType, a - b);
+		case MULT:
+			check_exceptions(a, b, &TOperand<T>::checkMulOverflow<B>);
+			return CreateOperand<B>(operandType, a + b);
+		case DIV:
+			check_exceptions(a, b, &TOperand<T>::checkDivOverflow<B>);
+			return CreateOperand<B>(operandType, a * b);
+		case MOD:
+			check_exceptions(a, b, &TOperand<T>::checkModOverflow<B>);
+			return CreateOperand<B>(operandType, fmod(a , b));
+	}
+}
+
+template<typename T>
+IOperand const * TOperand<T>::choose_type( IOperand const & rhs, eFunctionType functionType) const
+{
+	if (this->getType()  == DOUBLE || rhs.getType() == DOUBLE)
+	{
+		auto[a, b] = get_type<double>(rhs);
+		return apply_func<double>(DOUBLE, functionType, a , b);
+	}
+	if (this->getType()  == FLOAT || rhs.getType() == FLOAT)
+	{
+		auto[a, b] = get_type<double>(rhs);
+		return apply_func<float>(FLOAT, functionType, a , b);
+	}
+	if (this->getType()  == INT32 || rhs.getType() == INT32)
+	{
+		auto[a, b] = get_type<int32_t>(rhs);
+		return apply_func<int32_t>(INT32, functionType, a , b);
+	}
+	if (this->getType()  == INT16 || rhs.getType() == INT16)
+	{
+		auto[a, b] = get_type<int16_t>(rhs);
+		return apply_func<int16_t>(INT8, functionType, a , b);
+	}
+	auto[a, b] = get_type<int8_t>(rhs);
+	return apply_func<int8_t>(INT8, functionType, a , b);
 }
 
 template<typename T>
 IOperand const * TOperand<T>::operator-( IOperand const & rhs ) const
 {
-	TOperand<T> const & tmp = reinterpret_cast< const TOperand<T>& >(rhs);
-	auto t = get_highest_prec(tmp);
-	void (TOperand<T>::*f)( decltype(t), decltype(t)) const = &TOperand<T>::checkSubOverflow;
-	auto [a, b] = check_exceptions(tmp, f);
-	return CreateOperand<decltype(t)>(a + b);
+	return choose_type(rhs, SUB);
 }
 
 template<typename T>
 IOperand const * TOperand<T>::operator+( IOperand const & rhs ) const
 {
-	TOperand<T> const & tmp = reinterpret_cast< const TOperand<T>& >(rhs);
-
-	auto t = get_highest_prec(tmp);
-	void (TOperand<T>::*f)( decltype(t), decltype(t)) const = &TOperand<T>::checkAddOverflow;
-	auto [a, b] = check_exceptions(tmp, f);
-	return CreateOperand<decltype(t)>(a + b);
+	return choose_type(rhs, ADD);
 }
 
 template<typename T>
 IOperand const * TOperand<T>::operator*( IOperand const & rhs ) const
 {
-	TOperand<T> const & tmp = reinterpret_cast< const TOperand<T>& >(rhs);
-	auto t = get_highest_prec(tmp);
-	void (TOperand<T>::*f)( decltype(t), decltype(t)) const = &TOperand<T>::checkMulOverflow;
-	auto [a, b] = check_exceptions(tmp, f);
-	return CreateOperand<decltype(t)>(a * b);
+	return choose_type(rhs, MULT);
 }
 
 
 template<typename T>
 IOperand const * TOperand<T>::operator/( IOperand const & rhs ) const
 {
-	TOperand<T> const & tmp = reinterpret_cast< const TOperand<T>& >(rhs);
-	auto t = get_highest_prec(tmp);
-	void (TOperand<T>::*f)( decltype(t), decltype(t)) const = &TOperand<T>::checkDivOverflow;
-	auto [a, b] = check_exceptions(tmp, f);
-	return CreateOperand<decltype(t)>(a / b);
+	return choose_type(rhs, DIV);
 }
 
 
 template<typename T>
 IOperand const * TOperand<T>::operator%( IOperand const & rhs ) const
 {
-	TOperand<T> const & tmp = reinterpret_cast< const TOperand<T>& >(rhs);
-	auto t = get_highest_prec(tmp);
-	void (TOperand<T>::*f)( decltype(t), decltype(t)) const = &TOperand<T>::checkModOverflow;
-	auto [a, b] = check_exceptions(tmp, f);
-	return CreateOperand<decltype(t)>(fmod(a, b));
+	return choose_type(rhs, MOD);
 }
 
 /* ... */

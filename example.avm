@@ -1,5 +1,5 @@
 push int8(42)
-push int8(33)
+push float(33.5)
 add
 push int8(44)
 mul

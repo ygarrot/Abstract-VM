@@ -6,7 +6,7 @@
 #    By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/11 12:06:15 by ygarrot           #+#    #+#              #
-#    Updated: 2019/04/26 10:12:22 by ygarrot          ###   ########.fr        #
+#    Updated: 2019/04/26 12:31:57 by ygarrot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,11 +33,10 @@ SRC = \
 	  Exceptions/Exceptions.cpp\
 	  Lexer/Lexer.cpp\
 	  main.cpp\
-	  Operand/OperandFactory\
+	  Operand/OperandFactory.cpp\
 	  Parser/Parser.cpp\
 	  Vm/Computor.cpp
 
-	   # Exceptions/Exceptions.cpp\
 #Colors
 
 _RED=$(shell tput setaf 1)
@@ -60,7 +59,7 @@ $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(INCS)
 	@echo "$(_CYAN)\nCompiling library $(NAME)... $(_GREEN)DONE$(_END)"
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.cpp #src/Operand/TOperand.hpp
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp src/Operand/TOperand.hpp
 	@mkdir -p $(ALL_OBJ_DIR) || true
 	@printf "                                                          \r"
 	@printf "$(_CYAN)Compiling $@$(_END)\r"

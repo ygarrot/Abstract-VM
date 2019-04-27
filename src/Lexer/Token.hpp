@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 12:13:55 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/21 12:43:44 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/26 13:04:24 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ enum class TokenType
 {
 	Instruction,
 	Value,
-	N,
+	ENTIER,
 	V,
 	Sep
 };

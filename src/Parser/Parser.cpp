@@ -6,13 +6,11 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:37:19 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/25 11:11:53 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/26 12:22:38 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Parser.hpp"
-OperandFactory OpFactory;
-extern OperandFactory OpFactory;
 
 Parser::Parser(std::string target) 
 {
@@ -74,7 +72,7 @@ void Parser::parse()
 		switch (token->get_type())
 		{
 			case TokenType::Value:
-				token->op = OpFactory.CreateOperand(token->get_str());
+				token->op = OpFactory.createOperand(token->get_str());
 				break;
 			case TokenType::Instruction:
 				setFunction(token.get());

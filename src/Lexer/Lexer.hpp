@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 16:03:50 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/20 15:42:54 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/26 13:05:14 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
 
 /* #define S INSTRUCTION [SEP INSTRUCTION]* # */
 #define VALUE \
-	"int8\\(("   N ")\\)|"\
-	"int16\\(("  N ")\\)|"\
-	"int32\\(("  N ")\\)|"\
-	"double\\((" Z ")\\)|"\
-	"float\\(("  Z ")\\)|"
+	"int8\\(("   DIGIT ")\\)|"\
+	"int16\\(("  DIGIT ")\\)|"\
+	"int32\\(("  DIGIT ")\\)|"\
+	"double\\((" IMA ")\\)|"\
+	"float\\(("  IMA ")\\)|"
 
 #define INSTRUCTION \
 		"push"\
@@ -42,9 +42,9 @@
 	"|" "print"\
 	"|" "exit"
 
-#define N "[-]?[0-9]+"
+#define DIGIT "[-]?[0-9]+"
 
-#define Z "[-]?[0-9]+.[0-9]+"
+#define IMA "[-]?[0-9]+.[0-9]+"
 
 #define SEP "[\\n]+"
 

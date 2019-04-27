@@ -6,13 +6,14 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:36:35 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/26 10:00:11 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/26 11:11:00 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_HPP
 #define PARSER_HPP
 
+#include "../Operand/TOperand.hpp"
 #include "../Operand/OperandFactory.hpp"
 #include "../Lexer/Lexer.hpp"
 #include <iostream>

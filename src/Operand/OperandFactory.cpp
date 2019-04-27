@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 14:31:13 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/26 10:13:00 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/26 17:49:54 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ IOperand const * OperandFactory::createOperand( eOperandType type, std::string c
 }
 
 
-IOperand const *OperandFactory::CreateOperand(std::string str) const
+IOperand const *OperandFactory::createOperand(std::string str) const
 {
 	eOperandType type;
 	std::smatch match;
@@ -47,22 +47,22 @@ IOperand const *OperandFactory::CreateOperand(std::string str) const
 
 IOperand const * OperandFactory::createInt8( std::string const & value ) const
 {
-	return new TOperand<int8_t>(value, stoi(value), INT8);
+	return new TOperand<int8_t>(value, static_cast<int8_t>(stoi(value)), INT8);
 }
 
 IOperand const * OperandFactory::createInt16( std::string const & value ) const
 {
-	return new TOperand<int8_t>(value, stoi(value), INT16);
+	return new TOperand<int16_t>(value, stoi(value), INT16);
 }
 
 IOperand const * OperandFactory::createInt32( std::string const & value ) const
 {
-	return new TOperand<int8_t>(value, stoi(value), INT32);
+	return new TOperand<int32_t>(value, stoi(value), INT32);
 }
 
 IOperand const * OperandFactory::createFloat( std::string const & value ) const
 {
-	return new TOperand<int8_t>(value, stof(value), FLOAT);
+	return new TOperand<float>(value, stof(value), FLOAT);
 }
 
 IOperand const * OperandFactory::createDouble( std::string const & value ) const
