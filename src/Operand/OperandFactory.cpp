@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 14:31:13 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/26 17:49:54 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/27 13:43:40 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,11 @@ IOperand const *OperandFactory::createOperand(std::string str) const
 	return createOperand(type, match[2].str());
 }
 
+/* template<typename T> */
+/* void	check_overflow( */
 IOperand const * OperandFactory::createInt8( std::string const & value ) const
 {
-	return new TOperand<int8_t>(value, static_cast<int8_t>(stoi(value)), INT8);
+	return new TOperand<int8_t>(value, stoi(value), INT8);
 }
 
 IOperand const * OperandFactory::createInt16( std::string const & value ) const

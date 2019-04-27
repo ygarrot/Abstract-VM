@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:37:19 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/26 12:22:38 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/27 16:07:27 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ Parser     &Parser::operator=(Parser const & src)
 	(void)src;
 	return *this;
 }
-void	Parser::setFunction(Token * token)
+void	Parser::setFunction(Token * token, bool & value_expected)
 {
 	func_tab_t funcMap =
 	{
@@ -54,6 +54,7 @@ void	Parser::setFunction(Token * token)
 	func_tab_t::iterator it = funcMap.find(token->get_str());
 	if (it == funcMap.end())
 	{
+		value_expected = true;
 		if (!token->get_str().compare("push"))
 		{
 			token->f = &Computor::push;
@@ -67,15 +68,20 @@ void	Parser::setFunction(Token * token)
 
 void Parser::parse()
 {
+	bool value_expected = false;
+
 	for (std::shared_ptr<Token> token: _tokens)
 	{
 		switch (token->get_type())
 		{
 			case TokenType::Value:
 				token->op = OpFactory.createOperand(token->get_str());
+				value_expected = false;
 				break;
 			case TokenType::Instruction:
-				setFunction(token.get());
+				if (value_expected)
+					throw UnkownInstructionException();
+				setFunction(token.get(), value_expected);
 				break;
 			default:
 				;

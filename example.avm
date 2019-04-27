@@ -1,9 +1,10 @@
 push int8(42)
-push float(33.5)
+push int8(33);test
 add
+assert int8(75)
 push int8(44)
+push
 mul
 push int8(42)
 push int8(42)
-dump
 exit

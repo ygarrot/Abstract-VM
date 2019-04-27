@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:09:14 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/27 12:40:23 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/27 13:49:24 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,9 +190,13 @@ template<typename B>
 void TOperand<T>::checkMulOverflow(B a, B b) const
 { 
 	if (a > std::numeric_limits<B>::max() / b)
-		throw ValueUnderflowException(); 
+	{
+		throw ValueOverflowException(); 
+	}
 	if ((a < std::numeric_limits<B>::min() / b))
+	{
 		throw ValueUnderflowException(); 
+	}
 }
 
 template<typename T>
@@ -266,7 +270,7 @@ IOperand const * TOperand<T>::choose_type( IOperand const & rhs, eFunctionType f
 	}
 	if (this->getType()  == FLOAT || rhs.getType() == FLOAT)
 	{
-		auto[a, b] = get_type<double>(rhs);
+		auto[a, b] = get_type<float>(rhs);
 		return apply_func<float>(FLOAT, functionType, a , b);
 	}
 	if (this->getType()  == INT32 || rhs.getType() == INT32)

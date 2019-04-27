@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:36:35 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/26 11:11:00 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/27 16:03:07 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ class 					Parser
 		Parser(Parser const &src);
 		Parser 		&operator=(Parser const & src);
 		IOperand const *CreateOperand(std::string str) const;
-		void	setFunction(Token * token);
+		void	setFunction(Token * token, bool & value_expected);
 		void	parse();
 		TOKEN_PTR get_tokens(){return _tokens;};
 		void set_tokens(TOKEN_PTR tokens){_tokens = tokens;};

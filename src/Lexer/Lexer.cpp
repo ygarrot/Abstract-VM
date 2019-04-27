@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 16:04:05 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/21 13:04:05 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/27 16:05:13 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,36 +45,37 @@ void Lexer::lex(std::string toParse)
 	std::string nl;
 	std::string s;
 	TokenType	token_type;
+	bool is_end;
 
 	fs.open (toParse);
 	if (!fs.is_open())
 		return ;
 
 	while (getline(fs, nl, '\n')) {
-
+		nl = std::regex_replace (nl, std::regex(COMMENT),"$1");
+		nl = std::regex_replace (nl, std::regex(COMMENT2),"");
+		is_end = (regex_match(s, std::regex(END)));
+		/* std::cout << "[" + nl  + "]" << "\n"; */ 
 		std::stringstream ss(nl);
 		while (getline(ss, s, ' '))
 		{
 			if (regex_match(s, std::regex(INSTRUCTION)))
 			{
-				/* std::cout << "INSTR" << std::endl; */
-				/* std::cout << s <<std::endl; */
 				token_type = TokenType::Instruction;
 			}
 			else if (regex_match(s, std::regex(VALUE)))
 			{
-				/* std::cout << "VALUE" << std::endl; */
 				token_type = TokenType::Value;
 			}
 			else
 			{
-				/* std::cout << "Error : [" << s<< "]" << std::endl; */
-				/* token_type = token_type::Instruction; */
-				continue;
+				std::cout << s << "\n";
+				throw UnkownInstructionException();
 			}
 			_tokens.push_back(std::shared_ptr<Token>(new Token(token_type, s)));
 		}
-		/* _tokens.push_back(std::shared_ptr<Token>(new Token(TokenType::Sep, s))); */
+		if (is_end)
+			return ;
 	}
 	/* std::cout << _tokens.size() << std::endl; */
 }

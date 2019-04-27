@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 16:03:50 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/26 13:05:14 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/27 16:05:26 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 #include <fstream>
 
 /* #define S INSTRUCTION [SEP INSTRUCTION]* # */
+#define END "(.*)(;;.*$)"
+#define COMMENT "(.*[^;])(;.*$)"
+#define COMMENT2 "(;.*$)"
 #define VALUE \
 	"int8\\(("   DIGIT ")\\)|"\
 	"int16\\(("  DIGIT ")\\)|"\
@@ -30,7 +33,7 @@
 	"float\\(("  IMA ")\\)|"
 
 #define INSTRUCTION \
-		"push"\
+		"push" \
 	"|" "pop"\
 	"|" "dump"\
 	"|" "assert"\
