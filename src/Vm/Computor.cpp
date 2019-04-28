@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/28 16:53:50 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/28 17:42:21 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,22 @@ void		Computor::ft_assert(IOperand const * v)
 		throw AssertException();
 }
 
+void		Computor::max()
+{
+	if (_stack.size() < 1)
+		throw EmptyStackException();
+	std::cout << std::max_element(_stack.begin(), _stack.end())->get()->toString() << std::endl;
+}
+
+
+void		Computor::min()
+{
+	if (_stack.size() < 1)
+		throw EmptyStackException();
+	std::cout << std::min_element(_stack.begin(), _stack.end())->get()->toString() << std::endl;
+}
+
+
 void		Computor::push(IOperand const * op)
 {
 	_stack.push_back(std::shared_ptr< const IOperand>(op));
@@ -122,7 +138,6 @@ void	Computor::exit()
 
 void  Computor::dump()
 {
-	/* std::cout << "dump\n"; */
 	for (OP_PTR::iterator it = _stack.begin(); it != _stack.end(); ++it)
 	{
 		std::cout << it->get()->toString() << "\n"; 

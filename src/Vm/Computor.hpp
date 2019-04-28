@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:52 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/28 13:27:58 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/28 17:44:18 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #include <map>
 #include <string>
 #include <iostream>
+#include <numeric>
 #include <assert.h>     /* assert */
 
 class Token;
@@ -50,6 +51,10 @@ class Computor
 		void		print();
 		void		visit();
 		void		exit();
+
+		void		min();
+		void		max();
+
 		void		check_stack(size_t size);
 		TOKEN_PTR get_tokens(){return _tokens;};
 		void set_tokens(TOKEN_PTR tokens){_tokens = tokens;};

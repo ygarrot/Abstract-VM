@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 16:48:24 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/24 13:01:36 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/28 17:43:47 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ class IOperand {
 		virtual IOperand const * operator*( IOperand const & rhs ) const = 0; // Product
 		virtual IOperand const * operator/( IOperand const & rhs ) const = 0; // Quotient
 		virtual IOperand const * operator%( IOperand const & rhs ) const = 0; // Modulo
+
 		virtual std::string const & toString( void ) const = 0; // String representation of the instance
 		virtual ~IOperand( void ) {};
 };

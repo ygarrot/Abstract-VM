@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 12:55:13 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/28 16:58:49 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/28 17:24:00 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,15 @@ class NotEnoughValueException : public TokenException
 		NotEnoughValueException & operator=(NotEnoughValueException const & src);
 		virtual ~NotEnoughValueException(void) throw() {};
 };
+
+class BitwiseOnFloatException : public TokenException
+{
+	public:
+		explicit BitwiseOnFloatException(){_default= "Unabled to do bitwise operation between float";};
+		BitwiseOnFloatException(int line) : TokenException(  "Unabled to do bitwise operation between float", line) {};
+		BitwiseOnFloatException(BitwiseOnFloatException const &src);
+		BitwiseOnFloatException & operator=(BitwiseOnFloatException const & src);
+		virtual ~BitwiseOnFloatException(void) throw() {};
+};
+
 #endif

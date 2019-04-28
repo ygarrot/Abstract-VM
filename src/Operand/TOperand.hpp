@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:09:14 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/28 14:39:20 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/28 17:45:16 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ class TOperand: public IOperand {
 	protected:
 };
 
+
 template<typename T>
 template<typename B>
 std::pair<B, B> TOperand<T>::get_type(IOperand const & op) const
@@ -136,7 +137,7 @@ IOperand &TOperand<T>::operator=(IOperand const & src)
 template<typename T>
 int TOperand<T>::getPrecision( void ) const
 {
-	return (this->_n);
+	return (static_cast<int>(this->_type));
 }
 
 template<typename T>
