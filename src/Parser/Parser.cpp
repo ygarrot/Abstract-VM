@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:37:19 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/28 12:47:01 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/28 13:01:10 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,10 @@ void Parser::parse()
 				break;
 			case TokenType::Instruction:
 				if (value_expected)
+				{
+					Token::print_line_error(token->get_line());
 					throw UnkownInstructionException();
+				}
 				setFunction(token.get(), value_expected);
 				break;
 			default:

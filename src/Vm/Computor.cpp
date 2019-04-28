@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/28 12:43:46 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/28 13:12:17 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,11 @@ void		Computor::visit()
 					;
 			}
 		}
-		catch (std::exception e)
+		catch (std::exception &e)
 		{
-			std::cout << e.what();
+			Token::print_line_error(token->get_line());
+			std::cout << e.what() << std::endl;
+			return ;
 		}
 	}
 }

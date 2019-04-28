@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 12:13:55 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/28 12:43:15 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/28 13:03:49 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ typedef std::map<std::string, meth> func_tab_t;
 class Token
 {
 	public:
-		static std::string print_line_error(int line, std::string error)
+		static void print_line_error(int line)
 		{
-			return "Line : " + std::to_string(line) + error;
+			std::cout << "Line : " + std::to_string(line) + " Error : ";
 		};
 		Token(TokenType type, std::string str, int line): _type(type), _str(str), _line(line){};
 		int get_line()  { return _line;};

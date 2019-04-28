@@ -6,6 +6,8 @@ fi
 
 for file in `find test -type f`
 do
-	echo $file >>.log
+	echo "-------------------------------" $file "-------------------------------" >>.log
+	cat $file >> .log
+	echo "-------------------------------" result : "-------------------------------" >>.log
 	trap `./vm $file 2>>.log >>.log` 6
 done

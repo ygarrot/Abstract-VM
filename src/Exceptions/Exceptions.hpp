@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 12:55:13 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/28 12:54:28 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/28 13:09:17 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,15 @@
 #define EXCEPTION_HPP
 
 #include <exception>
-#include <string>
 
 class UnkownInstructionException : public std::exception
 {
 	public:
-		UnkownInstructionException();
+		UnkownInstructionException(){};
 		UnkownInstructionException(UnkownInstructionException const &src);
 		UnkownInstructionException & operator=(UnkownInstructionException const & src);
 		/* ~UnkownInstructionException(void){}; */
 		virtual const char * what(void) const throw() ;
-	private:
-		std::string _str = "Unkown Instruction";
-		/* const std::string _default ; */
 };
 
 class ValueUnderflowException : public std::exception

@@ -1,140 +1,497 @@
-test/correction/test1.avm
+------------------------------- test/correction/test1.avm -------------------------------
+push int32(42)
+push int32(33)
+add ;poney
+push float(44.55)
+mul
+push double(42.42)
+;commentaire de ouf
+push int32(42)
+dump
+pop
+assert double(42.42)
+exit
+------------------------------- result : -------------------------------
 119.550003
 42.42
 42
-test/correction/test2.avm
-libc++abi.dylib: terminating with uncaught exception of type FloatingPointException: Floating point exception
-test/correction/test3.avm
-libc++abi.dylib: terminating with uncaught exception of type std::out_of_range: stoi: out of range
-test/correction/test4.avm
-libc++abi.dylib: terminating with uncaught exception of type UnkownInstructionException: Unkown Instruction
-int16(32
-test/correction/test5.avm
-libc++abi.dylib: terminating with uncaught exception of type EmptyStackException: Stack is empty
-test/correction/test6.avm
-Assertion failed: (!_stack.back()->toString().compare(v->toString())), function ft_assert, file src/Vm/Computor.cpp, line 59.
-test/correction/test7.avm
-libc++abi.dylib: terminating with uncaught exception of type NotEnoughValueException: Not enough Value exception
-test/correction/test8.avm
-libc++abi.dylib: terminating with uncaught exception of type EmptyStackException: Stack is empty
-test/others/empty_stack.avm
-libc++abi.dylib: terminating with uncaught exception of type EmptyStackException: Stack is empty
-test/others/false_assert.avm
-test/others/float_point/div_0.avm
-libc++abi.dylib: terminating with uncaught exception of type FloatingPointException: Floating point exception
-test/others/float_point/mod_0.avm
-libc++abi.dylib: terminating with uncaught exception of type FloatingPointException: Floating point exception
-test/others/no_exit.avm
-test/others/not_enough_value.avm
-libc++abi.dylib: terminating with uncaught exception of type NotEnoughValueException: Not enough Value exception
-test/others/unknown_instruction.avm
-libc++abi.dylib: terminating with uncaught exception of type UnkownInstructionException: Unkown Instruction
-mult
-test/overflow/add/double.avm
-libc++abi.dylib: terminating with uncaught exception of type UnkownInstructionException: Unkown Instruction
-double(2)
-test/overflow/add/float.avm
-libc++abi.dylib: terminating with uncaught exception of type UnkownInstructionException: Unkown Instruction
-float(2)
-test/overflow/add/int16.avm
-libc++abi.dylib: terminating with uncaught exception of type ValueOverflowException: Value overflow
-test/overflow/add/int32.avm
-libc++abi.dylib: terminating with uncaught exception of type ValueOverflowException: Value overflow
-test/overflow/add/int8.avm
-test/overflow/div/double.avm
-libc++abi.dylib: terminating with uncaught exception of type UnkownInstructionException: Unkown Instruction
-double(2)
-test/overflow/div/float.avm
-libc++abi.dylib: terminating with uncaught exception of type UnkownInstructionException: Unkown Instruction
-float(2)
-test/overflow/div/int16.avm
-test/overflow/div/int32.avm
+------------------------------- test/correction/test2.avm -------------------------------
+push int32(32)
+push int32(0)
+div
+exit
+------------------------------- result : -------------------------------
+Line : 3 Error : Floating point exception
+------------------------------- test/correction/test3.avm -------------------------------
+push int16(999999999999999999999999999)
+exit
+------------------------------- result : -------------------------------
+stoi: out of range
+------------------------------- test/correction/test4.avm -------------------------------
+push int16(32 ;)
+pu int(32))
+exit
+------------------------------- result : -------------------------------
+Line : 1 Error : Unkown Instruction
+------------------------------- test/correction/test5.avm -------------------------------
+pop
+exit
+------------------------------- result : -------------------------------
+Line : 1 Error : Stack is empty
+------------------------------- test/correction/test6.avm -------------------------------
+push int32(42)
+assert int32(0)
+exit
+------------------------------- result : -------------------------------
+Assertion failed: (!_stack.back()->toString().compare(v->toString())), function ft_assert, file src/Vm/Computor.cpp, line 66.
+------------------------------- test/correction/test7.avm -------------------------------
+push int32(42)
+add
+exit
+------------------------------- result : -------------------------------
+Line : 2 Error : Not enough Value exception
+------------------------------- test/correction/test8.avm -------------------------------
+push int8(33) ;!
+push int8(112) ;p
+push int8(111) ;o
+push int8(108) ;l
+push int8(112) ;p
+print
+pop
+print
+pop
+print
+pop
+print
+pop
+print
+pop
+exit
+------------------------------- result : -------------------------------
+Line : 11 Error : Stack is empty
+------------------------------- test/others/empty_stack.avm -------------------------------
+pop
+exit
+------------------------------- result : -------------------------------
+Line : 1 Error : Stack is empty
+------------------------------- test/others/false_assert.avm -------------------------------
+push int8(3)
+assert int8(3)
+exit
+------------------------------- result : -------------------------------
+------------------------------- test/others/float_point/div_0.avm -------------------------------
+push int8(2)
+push int8(0)
+div
+exit
+------------------------------- result : -------------------------------
+Line : 3 Error : Floating point exception
+------------------------------- test/others/float_point/mod_0.avm -------------------------------
+push int8(2)
+push int8(0)
+mod
+exit
+------------------------------- result : -------------------------------
+Line : 3 Error : Floating point exception
+------------------------------- test/others/no_exit.avm -------------------------------
+push int8(0)
+------------------------------- result : -------------------------------
+------------------------------- test/others/not_enough_value.avm -------------------------------
+push int8(2)
+add
+exit
+------------------------------- result : -------------------------------
+Line : 2 Error : Not enough Value exception
+------------------------------- test/others/unknown_instruction.avm -------------------------------
+mult 1 1
+exit
+------------------------------- result : -------------------------------
+Line : 1 Error : Unkown Instruction
+------------------------------- test/overflow/add/double.avm -------------------------------
+push double(2147483647)
+push double(2)
+add
+exit
+
+------------------------------- result : -------------------------------
+Line : 2 Error : Unkown Instruction
+------------------------------- test/overflow/add/float.avm -------------------------------
+push float(2147483647)
+push float(2)
+add
+exit
+
+------------------------------- result : -------------------------------
+Line : 2 Error : Unkown Instruction
+------------------------------- test/overflow/add/int16.avm -------------------------------
+push int16(32767)
+push int16(2)
+add
+exit
+
+------------------------------- result : -------------------------------
+Line : 3 Error : Value overflow
+------------------------------- test/overflow/add/int32.avm -------------------------------
+push int32(2147483647)
+push int32(2)
+add
+exit
+
+------------------------------- result : -------------------------------
+Line : 3 Error : Value overflow
+------------------------------- test/overflow/add/int8.avm -------------------------------
+push int8(255)
+push int8(2)
+add
+exit
+
+------------------------------- result : -------------------------------
+------------------------------- test/overflow/div/double.avm -------------------------------
+push double(2147483647)
+push double(2)
+div
+exit
+
+------------------------------- result : -------------------------------
+Line : 2 Error : Unkown Instruction
+------------------------------- test/overflow/div/float.avm -------------------------------
+push float(2147483647)
+push float(2)
+div
+exit
+
+------------------------------- result : -------------------------------
+Line : 2 Error : Unkown Instruction
+------------------------------- test/overflow/div/int16.avm -------------------------------
+push int16(-32767)
+push int16(2)
+div
+exit
+
+------------------------------- result : -------------------------------
+------------------------------- test/overflow/div/int32.avm -------------------------------
+push int32(2147483647)
+push int32(2)
+div
+exit
+
+------------------------------- result : -------------------------------
 src/Operand/TOperand.hpp:256:43: runtime error: signed integer overflow: 2147483647 * 2 cannot be represented in type 'int'
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior src/Operand/TOperand.hpp:256:43 in 
-test/overflow/div/int8.avm
-test/overflow/mod/double.avm
-libc++abi.dylib: terminating with uncaught exception of type UnkownInstructionException: Unkown Instruction
-double(2)
-test/overflow/mod/float.avm
-libc++abi.dylib: terminating with uncaught exception of type UnkownInstructionException: Unkown Instruction
-float(2)
-test/overflow/mod/int16.avm
-test/overflow/mod/int32.avm
-test/overflow/mod/int8.avm
-test/overflow/mul/double.avm
-libc++abi.dylib: terminating with uncaught exception of type UnkownInstructionException: Unkown Instruction
-double(2)
-test/overflow/mul/float.avm
-libc++abi.dylib: terminating with uncaught exception of type UnkownInstructionException: Unkown Instruction
-float(2)
-test/overflow/mul/int16.avm
-libc++abi.dylib: terminating with uncaught exception of type ValueOverflowException: Value overflow
-test/overflow/mul/int32.avm
-libc++abi.dylib: terminating with uncaught exception of type ValueOverflowException: Value overflow
-test/overflow/mul/int8.avm
-test/overflow/sub/double.avm
-libc++abi.dylib: terminating with uncaught exception of type UnkownInstructionException: Unkown Instruction
-double(2)
-test/overflow/sub/float.avm
-libc++abi.dylib: terminating with uncaught exception of type UnkownInstructionException: Unkown Instruction
-float(2)
-test/overflow/sub/int16.avm
-test/overflow/sub/int32.avm
+------------------------------- test/overflow/div/int8.avm -------------------------------
+push int8(255)
+push int8(2)
+div
+exit
+
+------------------------------- result : -------------------------------
+------------------------------- test/overflow/mod/double.avm -------------------------------
+push double(2147483647)
+push double(2)
+mod
+exit
+
+------------------------------- result : -------------------------------
+Line : 2 Error : Unkown Instruction
+------------------------------- test/overflow/mod/float.avm -------------------------------
+push float(2147483647)
+push float(2)
+mod
+exit
+
+------------------------------- result : -------------------------------
+Line : 2 Error : Unkown Instruction
+------------------------------- test/overflow/mod/int16.avm -------------------------------
+push int16(-32767)
+push int16(2)
+sub
+exit
+
+------------------------------- result : -------------------------------
+------------------------------- test/overflow/mod/int32.avm -------------------------------
+push int32(-2147483647)
+push int32(-2)
+mod
+exit
+
+------------------------------- result : -------------------------------
+------------------------------- test/overflow/mod/int8.avm -------------------------------
+push int8(255)
+push int8(2)
+mod
+exit
+
+------------------------------- result : -------------------------------
+------------------------------- test/overflow/mul/double.avm -------------------------------
+push double(2147483647)
+push double(2)
+mul
+exit
+
+------------------------------- result : -------------------------------
+Line : 2 Error : Unkown Instruction
+------------------------------- test/overflow/mul/float.avm -------------------------------
+push float(2147483647)
+push float(2)
+mul
+exit
+
+------------------------------- result : -------------------------------
+Line : 2 Error : Unkown Instruction
+------------------------------- test/overflow/mul/int16.avm -------------------------------
+push int16(32767)
+push int16(2)
+mul
+exit
+
+------------------------------- result : -------------------------------
+Line : 3 Error : Value overflow
+------------------------------- test/overflow/mul/int32.avm -------------------------------
+push int32(2147483647)
+push int32(2)
+mul
+exit
+
+------------------------------- result : -------------------------------
+Line : 3 Error : Value overflow
+------------------------------- test/overflow/mul/int8.avm -------------------------------
+push int8(255)
+push int8(2)
+mul
+exit
+
+------------------------------- result : -------------------------------
+------------------------------- test/overflow/sub/double.avm -------------------------------
+push double(2147483647)
+push double(2)
+sub
+exit
+
+------------------------------- result : -------------------------------
+Line : 2 Error : Unkown Instruction
+------------------------------- test/overflow/sub/float.avm -------------------------------
+push float(2147483647)
+push float(2)
+sub
+exit
+
+------------------------------- result : -------------------------------
+Line : 2 Error : Unkown Instruction
+------------------------------- test/overflow/sub/int16.avm -------------------------------
+push int16(32767)
+push int16(-2)
+sub
+exit
+
+------------------------------- result : -------------------------------
+------------------------------- test/overflow/sub/int32.avm -------------------------------
+push int32(2147483647)
+push int32(-2)
+sub
+exit
+
+------------------------------- result : -------------------------------
 src/Operand/TOperand.hpp:250:43: runtime error: signed integer overflow: 2147483647 - -2 cannot be represented in type 'int'
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior src/Operand/TOperand.hpp:250:43 in 
-test/overflow/sub/int8.avm
-libc++abi.dylib: terminating with uncaught exception of type ValueUnderflowException: Value undeflow
-test/underflow/add/double.avm
-libc++abi.dylib: terminating with uncaught exception of type UnkownInstructionException: Unkown Instruction
-double(2)
-test/underflow/add/float.avm
-libc++abi.dylib: terminating with uncaught exception of type UnkownInstructionException: Unkown Instruction
-float(2)
-test/underflow/add/int16.avm
-libc++abi.dylib: terminating with uncaught exception of type ValueUnderflowException: Value undeflow
-test/underflow/add/int32.avm
-libc++abi.dylib: terminating with uncaught exception of type ValueUnderflowException: Value undeflow
-test/underflow/add/int8.avm
-test/underflow/div/double.avm
-libc++abi.dylib: terminating with uncaught exception of type UnkownInstructionException: Unkown Instruction
-double(2)
-test/underflow/div/float.avm
-libc++abi.dylib: terminating with uncaught exception of type UnkownInstructionException: Unkown Instruction
-float(2)
-test/underflow/div/int16.avm
-test/underflow/div/int32.avm
+------------------------------- test/overflow/sub/int8.avm -------------------------------
+push int8(255)
+push int8(-2)
+sub
+exit
+
+------------------------------- result : -------------------------------
+Line : 3 Error : Value undeflow
+------------------------------- test/underflow/add/double.avm -------------------------------
+push double(2147483647)
+push double(2)
+add
+exit
+
+------------------------------- result : -------------------------------
+Line : 2 Error : Unkown Instruction
+------------------------------- test/underflow/add/float.avm -------------------------------
+push float(2147483647)
+push float(2)
+add
+exit
+
+------------------------------- result : -------------------------------
+Line : 2 Error : Unkown Instruction
+------------------------------- test/underflow/add/int16.avm -------------------------------
+push int16(-32767)
+push int16(-2)
+add
+exit
+
+------------------------------- result : -------------------------------
+Line : 3 Error : Value undeflow
+------------------------------- test/underflow/add/int32.avm -------------------------------
+push int32(-2147483647)
+push int32(-2)
+add
+exit
+
+------------------------------- result : -------------------------------
+Line : 3 Error : Value undeflow
+------------------------------- test/underflow/add/int8.avm -------------------------------
+push int8(-255)
+push int8(-2)
+add
+exit
+
+------------------------------- result : -------------------------------
+------------------------------- test/underflow/div/double.avm -------------------------------
+push double(2147483647)
+push double(2)
+div
+exit
+
+------------------------------- result : -------------------------------
+Line : 2 Error : Unkown Instruction
+------------------------------- test/underflow/div/float.avm -------------------------------
+push float(2147483647)
+push float(2)
+div
+exit
+
+------------------------------- result : -------------------------------
+Line : 2 Error : Unkown Instruction
+------------------------------- test/underflow/div/int16.avm -------------------------------
+push int16(-32767)
+push int16(2)
+div
+exit
+
+------------------------------- result : -------------------------------
+------------------------------- test/underflow/div/int32.avm -------------------------------
+push int32(2147483647)
+push int32(2)
+div
+exit
+
+------------------------------- result : -------------------------------
 src/Operand/TOperand.hpp:256:43: runtime error: signed integer overflow: 2147483647 * 2 cannot be represented in type 'int'
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior src/Operand/TOperand.hpp:256:43 in 
-test/underflow/div/int8.avm
-test/underflow/mod/double.avm
-libc++abi.dylib: terminating with uncaught exception of type UnkownInstructionException: Unkown Instruction
-double(2)
-test/underflow/mod/float.avm
-libc++abi.dylib: terminating with uncaught exception of type UnkownInstructionException: Unkown Instruction
-float(2)
-test/underflow/mod/int16.avm
-test/underflow/mod/int32.avm
-test/underflow/mod/int8.avm
-test/underflow/mul/double.avm
-libc++abi.dylib: terminating with uncaught exception of type UnkownInstructionException: Unkown Instruction
-double(2)
-test/underflow/mul/float.avm
-libc++abi.dylib: terminating with uncaught exception of type UnkownInstructionException: Unkown Instruction
-float(2)
-test/underflow/mul/int16.avm
-libc++abi.dylib: terminating with uncaught exception of type ValueUnderflowException: Value undeflow
-test/underflow/mul/int32.avm
-libc++abi.dylib: terminating with uncaught exception of type ValueUnderflowException: Value undeflow
-test/underflow/mul/int8.avm
-test/underflow/sub/double.avm
-libc++abi.dylib: terminating with uncaught exception of type UnkownInstructionException: Unkown Instruction
-double(2)
-test/underflow/sub/float.avm
-libc++abi.dylib: terminating with uncaught exception of type UnkownInstructionException: Unkown Instruction
-float(2)
-test/underflow/sub/int16.avm
-test/underflow/sub/int32.avm
+------------------------------- test/underflow/div/int8.avm -------------------------------
+push int8(255)
+push int8(2)
+div
+exit
+
+------------------------------- result : -------------------------------
+------------------------------- test/underflow/mod/double.avm -------------------------------
+push double(2147483647)
+push double(2)
+mod
+exit
+
+------------------------------- result : -------------------------------
+Line : 2 Error : Unkown Instruction
+------------------------------- test/underflow/mod/float.avm -------------------------------
+push float(2147483647)
+push float(2)
+mod
+exit
+
+------------------------------- result : -------------------------------
+Line : 2 Error : Unkown Instruction
+------------------------------- test/underflow/mod/int16.avm -------------------------------
+push int16(-32767)
+push int16(2)
+sub
+exit
+
+------------------------------- result : -------------------------------
+------------------------------- test/underflow/mod/int32.avm -------------------------------
+push int32(-2147483647)
+push int32(-2)
+mod
+exit
+
+------------------------------- result : -------------------------------
+------------------------------- test/underflow/mod/int8.avm -------------------------------
+push int8(255)
+push int8(2)
+mod
+exit
+
+------------------------------- result : -------------------------------
+------------------------------- test/underflow/mul/double.avm -------------------------------
+push double(2147483647)
+push double(2)
+mul
+exit
+
+------------------------------- result : -------------------------------
+Line : 2 Error : Unkown Instruction
+------------------------------- test/underflow/mul/float.avm -------------------------------
+push float(2147483647)
+push float(2)
+mul
+exit
+
+------------------------------- result : -------------------------------
+Line : 2 Error : Unkown Instruction
+------------------------------- test/underflow/mul/int16.avm -------------------------------
+push int16(-32767)
+push int16(2)
+mul
+exit
+
+------------------------------- result : -------------------------------
+Line : 3 Error : Value undeflow
+------------------------------- test/underflow/mul/int32.avm -------------------------------
+push int32(-2147483647)
+push int32(2)
+mul
+exit
+
+------------------------------- result : -------------------------------
+Line : 3 Error : Value undeflow
+------------------------------- test/underflow/mul/int8.avm -------------------------------
+push int8(-255)
+push int8(2)
+mul
+exit
+
+------------------------------- result : -------------------------------
+------------------------------- test/underflow/sub/double.avm -------------------------------
+push double(-2147483647)
+push double(2)
+sub
+exit
+
+------------------------------- result : -------------------------------
+Line : 2 Error : Unkown Instruction
+------------------------------- test/underflow/sub/float.avm -------------------------------
+push float(-2147483647)
+push float(2)
+sub
+exit
+
+------------------------------- result : -------------------------------
+Line : 2 Error : Unkown Instruction
+------------------------------- test/underflow/sub/int16.avm -------------------------------
+push int16(-32767)
+push int16(2)
+sub
+exit
+
+------------------------------- result : -------------------------------
+------------------------------- test/underflow/sub/int32.avm -------------------------------
+push int32(-2147483647)
+push int32(2)
+sub
+exit
+
+------------------------------- result : -------------------------------
 src/Operand/TOperand.hpp:250:43: runtime error: signed integer overflow: -2147483647 - 2 cannot be represented in type 'int'
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior src/Operand/TOperand.hpp:250:43 in 
-test/underflow/sub/int8.avm
-libc++abi.dylib: terminating with uncaught exception of type ValueOverflowException: Value overflow
+------------------------------- test/underflow/sub/int8.avm -------------------------------
+push int8(-255)
+push int8(2)
+sub
+exit
+
+------------------------------- result : -------------------------------
+Line : 3 Error : Value overflow

@@ -6,13 +6,12 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 16:04:05 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/28 12:43:27 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/28 13:02:40 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "Lexer.hpp"
-
 
 Lexer::Lexer(std::string target) 
 {
@@ -63,6 +62,7 @@ bool Lexer::setToken(std::string nl)
 		}
 		else
 		{
+			Token::print_line_error(_lines);
 			throw UnkownInstructionException();
 		}
 		_tokens.push_back(std::shared_ptr<Token>(new Token(token_type, s, _lines)));
