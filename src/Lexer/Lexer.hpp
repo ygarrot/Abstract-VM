@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 16:03:50 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/27 16:05:26 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/28 12:41:27 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,14 @@ class 					Lexer
 		Lexer(std::string name);
 		Lexer(Lexer const &src);
 		Lexer 		&operator=(Lexer const & src);
-		void lex(std::string toParse);
-		TOKEN_PTR get_tokens(){return _tokens;};
+		void		lex(std::string toParse);
+		bool		setToken(std::string nl);
+		TOKEN_PTR	get_tokens(){return _tokens;};
 	private:
-		TOKEN_PTR _tokens;
+		int			_lines;
+		TOKEN_PTR	_tokens;
 };
+std::string print_line_error(int line, std::string error);
 /* std::ostream 		&operator<<(std::ostream & o, Lexer const & src); */
 
 #endif

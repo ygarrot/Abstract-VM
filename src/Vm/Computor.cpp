@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/27 15:23:08 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/28 12:43:46 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,25 @@ void		Computor::visit()
 	for (TOKEN_PTR::iterator it = _tokens.begin(); it != _tokens.end(); ++it)
 	{
 		Token *token = it->get();
-		switch (token->get_type())
+		try{
+			switch (token->get_type())
+			{
+				case TokenType::Instruction:
+					if (it + 1 != _tokens.end() && (it + 1)->get()->get_type() != TokenType::Instruction)
+					{
+						++it;
+						token->f(this, it->get()->op);
+					}
+					else
+						token->method(this);
+					break;
+				default:
+					;
+			}
+		}
+		catch (std::exception e)
 		{
-			case TokenType::Instruction:
-				if (it + 1 != _tokens.end() && (it + 1)->get()->get_type() != TokenType::Instruction)
-				{
-					/* std::cout << token->get_str() << std::endl; */
-					++it;
-					token->f(this, it->get()->op);
-				}
-				else
-					token->method(this);
-				break;
-			default:
-				;
+			std::cout << e.what();
 		}
 	}
 }
