@@ -4,7 +4,7 @@ if [ -f .log ]; then
 	rm .log
 fi
 
-for file in `find test -type f`
+for file in `find $@ -type f`
 do
 	echo "-------------------------------" $file "-------------------------------" >>.log
 	cat $file >> .log

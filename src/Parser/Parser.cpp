@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:37:19 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/28 13:56:51 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/28 16:05:08 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ void Parser::parse()
 				{
 					token->op = OpFactory.createOperand(token->get_str());
 				}
-				catch (std::exception &e)
+				catch (TokenException &e)
 				{
-					Token::print_line_error(token->get_line());
+					e.set_str(token->get_line());
 					throw e;
 				}
 				value_expected = false;
@@ -89,8 +89,8 @@ void Parser::parse()
 			case TokenType::Instruction:
 				if (value_expected)
 				{
-					Token::print_line_error(token->get_line());
-					throw UnkownInstructionException();
+					/* Token::print_line_error(token->get_line()); */
+					throw UnknownInstructionException(token->get_line());
 				}
 				setFunction(token.get(), value_expected);
 				break;

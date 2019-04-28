@@ -26,7 +26,7 @@ Line : 3 Error : Floating point exception
 push int16(999999999999999999999999999)
 exit
 ------------------------------- result : -------------------------------
-Line : 1 Error : std::exception
+Line : 1 Error : Value overflow
 ------------------------------- test/correction/test4.avm -------------------------------
 push int16(32 ;)
 pu int(32))
@@ -112,21 +112,19 @@ exit
 ------------------------------- result : -------------------------------
 Line : 1 Error : Unkown Instruction
 ------------------------------- test/overflow/add/double.avm -------------------------------
-push double(2147483647)
-push double(2)
+push double(2147483647.0)
+push double(2.0)
 add
 exit
 
 ------------------------------- result : -------------------------------
-Line : 2 Error : Unkown Instruction
 ------------------------------- test/overflow/add/float.avm -------------------------------
-push float(2147483647)
-push float(2)
+push float(2147483647.0)
+push float(2.0)
 add
 exit
 
 ------------------------------- result : -------------------------------
-Line : 2 Error : Unkown Instruction
 ------------------------------- test/overflow/add/int16.avm -------------------------------
 push int16(32767)
 push int16(2)
@@ -150,39 +148,36 @@ add
 exit
 
 ------------------------------- result : -------------------------------
-Line : 1 Error : std::exception
+Line : 1 Error : Value overflow
 ------------------------------- test/overflow/div/double.avm -------------------------------
-push double(2147483647)
-push double(2)
+push double(2147483647.0)
+push double(2.0)
 div
 exit
 
 ------------------------------- result : -------------------------------
-Line : 2 Error : Unkown Instruction
 ------------------------------- test/overflow/div/float.avm -------------------------------
-push float(2147483647)
-push float(2)
+push float(2147483647.0)
+push float(2.0)
 div
 exit
 
 ------------------------------- result : -------------------------------
-Line : 2 Error : Unkown Instruction
 ------------------------------- test/overflow/mod/double.avm -------------------------------
-push double(2147483647)
-push double(2)
+push double(2147483647.0)
+push double(2.0)
 mod
 exit
 
 ------------------------------- result : -------------------------------
-Line : 2 Error : Unkown Instruction
 ------------------------------- test/overflow/mod/float.avm -------------------------------
-push float(2147483647)
-push float(2)
+push float(2147483647.0)
+push float(2.0)
 mod
 exit
 
 ------------------------------- result : -------------------------------
-Line : 2 Error : Unkown Instruction
+Line : 3 Error : Value underflow
 ------------------------------- test/overflow/mod/int16.avm -------------------------------
 push int16(-32767)
 push int16(2)
@@ -190,7 +185,7 @@ sub
 exit
 
 ------------------------------- result : -------------------------------
-Line : 3 Error : Value undeflow
+Line : 3 Error : Value underflow
 ------------------------------- test/overflow/mod/int32.avm -------------------------------
 push int32(-2147483647)
 push int32(-2)
@@ -205,23 +200,21 @@ mod
 exit
 
 ------------------------------- result : -------------------------------
-Line : 1 Error : std::exception
+Line : 1 Error : Value overflow
 ------------------------------- test/overflow/mul/double.avm -------------------------------
-push double(2147483647)
-push double(2)
+push double(2147483647.0)
+push double(2.0)
 mul
 exit
 
 ------------------------------- result : -------------------------------
-Line : 2 Error : Unkown Instruction
 ------------------------------- test/overflow/mul/float.avm -------------------------------
-push float(2147483647)
-push float(2)
+push float(2147483647.0)
+push float(2.0)
 mul
 exit
 
 ------------------------------- result : -------------------------------
-Line : 2 Error : Unkown Instruction
 ------------------------------- test/overflow/mul/int16.avm -------------------------------
 push int16(32767)
 push int16(2)
@@ -245,7 +238,7 @@ mul
 exit
 
 ------------------------------- result : -------------------------------
-Line : 1 Error : std::exception
+Line : 1 Error : Value overflow
 ------------------------------- test/overflow/sub/double.avm -------------------------------
 push double(2147483647)
 push double(2)
@@ -285,23 +278,21 @@ sub
 exit
 
 ------------------------------- result : -------------------------------
-Line : 1 Error : std::exception
+Line : 1 Error : Value overflow
 ------------------------------- test/underflow/add/double.avm -------------------------------
-push double(2147483647)
-push double(2)
+push double(2147483647.0)
+push double(2.0)
 add
 exit
 
 ------------------------------- result : -------------------------------
-Line : 2 Error : Unkown Instruction
 ------------------------------- test/underflow/add/float.avm -------------------------------
-push float(2147483647)
-push float(2)
+push float(2147483647.0)
+push float(2.0)
 add
 exit
 
 ------------------------------- result : -------------------------------
-Line : 2 Error : Unkown Instruction
 ------------------------------- test/underflow/add/int16.avm -------------------------------
 push int16(-32767)
 push int16(-2)
@@ -309,7 +300,7 @@ add
 exit
 
 ------------------------------- result : -------------------------------
-Line : 3 Error : Value undeflow
+Line : 3 Error : Value underflow
 ------------------------------- test/underflow/add/int32.avm -------------------------------
 push int32(-2147483647)
 push int32(-2)
@@ -317,7 +308,7 @@ add
 exit
 
 ------------------------------- result : -------------------------------
-Line : 3 Error : Value undeflow
+Line : 3 Error : Value underflow
 ------------------------------- test/underflow/add/int8.avm -------------------------------
 push int8(-255)
 push int8(-2)
@@ -325,39 +316,36 @@ add
 exit
 
 ------------------------------- result : -------------------------------
-Line : 1 Error : std::exception
+Line : 1 Error : Value underflow
 ------------------------------- test/underflow/div/double.avm -------------------------------
-push double(2147483647)
-push double(2)
+push double(2147483647.0)
+push double(2.0)
 div
 exit
 
 ------------------------------- result : -------------------------------
-Line : 2 Error : Unkown Instruction
 ------------------------------- test/underflow/div/float.avm -------------------------------
-push float(2147483647)
-push float(2)
+push float(2147483647.0)
+push float(2.0)
 div
 exit
 
 ------------------------------- result : -------------------------------
-Line : 2 Error : Unkown Instruction
 ------------------------------- test/underflow/mod/double.avm -------------------------------
-push double(2147483647)
-push double(2)
+push double(2147483647.0)
+push double(2.0)
 mod
 exit
 
 ------------------------------- result : -------------------------------
-Line : 2 Error : Unkown Instruction
 ------------------------------- test/underflow/mod/float.avm -------------------------------
-push float(2147483647)
-push float(2)
+push float(2147483647.0)
+push float(2.0)
 mod
 exit
 
 ------------------------------- result : -------------------------------
-Line : 2 Error : Unkown Instruction
+Line : 3 Error : Value underflow
 ------------------------------- test/underflow/mod/int16.avm -------------------------------
 push int16(-32767)
 push int16(2)
@@ -365,7 +353,7 @@ sub
 exit
 
 ------------------------------- result : -------------------------------
-Line : 3 Error : Value undeflow
+Line : 3 Error : Value underflow
 ------------------------------- test/underflow/mod/int32.avm -------------------------------
 push int32(-2147483647)
 push int32(-2)
@@ -380,23 +368,21 @@ mod
 exit
 
 ------------------------------- result : -------------------------------
-Line : 1 Error : std::exception
+Line : 1 Error : Value overflow
 ------------------------------- test/underflow/mul/double.avm -------------------------------
-push double(2147483647)
-push double(2)
+push double(2147483647.0)
+push double(2.0)
 mul
 exit
 
 ------------------------------- result : -------------------------------
-Line : 2 Error : Unkown Instruction
 ------------------------------- test/underflow/mul/float.avm -------------------------------
-push float(2147483647)
-push float(2)
+push float(2147483647.0)
+push float(2.0)
 mul
 exit
 
 ------------------------------- result : -------------------------------
-Line : 2 Error : Unkown Instruction
 ------------------------------- test/underflow/mul/int16.avm -------------------------------
 push int16(-32767)
 push int16(2)
@@ -404,7 +390,7 @@ mul
 exit
 
 ------------------------------- result : -------------------------------
-Line : 3 Error : Value undeflow
+Line : 3 Error : Value underflow
 ------------------------------- test/underflow/mul/int32.avm -------------------------------
 push int32(-2147483647)
 push int32(2)
@@ -412,7 +398,7 @@ mul
 exit
 
 ------------------------------- result : -------------------------------
-Line : 3 Error : Value undeflow
+Line : 3 Error : Value underflow
 ------------------------------- test/underflow/mul/int8.avm -------------------------------
 push int8(-255)
 push int8(2)
@@ -420,23 +406,23 @@ mul
 exit
 
 ------------------------------- result : -------------------------------
-Line : 1 Error : std::exception
+Line : 1 Error : Value underflow
 ------------------------------- test/underflow/sub/double.avm -------------------------------
-push double(-2147483647)
-push double(2)
+push double(-2147483647.0.0)
+push double(2.0)
 sub
 exit
 
 ------------------------------- result : -------------------------------
-Line : 2 Error : Unkown Instruction
+Line : 1 Error : Unkown Instruction
 ------------------------------- test/underflow/sub/float.avm -------------------------------
-push float(-2147483647)
-push float(2)
+push double(-2147483647.0.0)
+push float(2.0)
 sub
 exit
 
 ------------------------------- result : -------------------------------
-Line : 2 Error : Unkown Instruction
+Line : 1 Error : Unkown Instruction
 ------------------------------- test/underflow/sub/int16.avm -------------------------------
 push int16(-32767)
 push int16(2)
@@ -444,7 +430,7 @@ sub
 exit
 
 ------------------------------- result : -------------------------------
-Line : 3 Error : Value undeflow
+Line : 3 Error : Value underflow
 ------------------------------- test/underflow/sub/int32.avm -------------------------------
 push int32(-2147483647)
 push int32(2)
@@ -452,7 +438,7 @@ sub
 exit
 
 ------------------------------- result : -------------------------------
-Line : 3 Error : Value undeflow
+Line : 3 Error : Value underflow
 ------------------------------- test/underflow/sub/int8.avm -------------------------------
 push int8(-255)
 push int8(2)
@@ -460,4 +446,4 @@ sub
 exit
 
 ------------------------------- result : -------------------------------
-Line : 1 Error : std::exception
+Line : 1 Error : Value underflow

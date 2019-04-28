@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:09:14 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/28 14:27:57 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/28 14:39:20 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 class OperandFactory;
 template<typename T>
 class TOperand;
+
 #include <cfenv>
 #include <iostream>
 #include <cmath>
@@ -318,7 +319,5 @@ IOperand const * TOperand<T>::operator%( IOperand const & rhs ) const
 {
 	return choose_type(rhs, MOD);
 }
-
-/* ... */
 
 #endif
