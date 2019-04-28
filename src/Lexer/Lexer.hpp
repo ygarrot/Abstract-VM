@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 16:03:50 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/28 12:57:31 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/28 14:30:17 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ class 					Lexer
 		int			_lines;
 		TOKEN_PTR	_tokens;
 };
-std::string print_line_error(int line, std::string error);
 /* std::ostream 		&operator<<(std::ostream & o, Lexer const & src); */
 
 #endif

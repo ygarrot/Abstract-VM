@@ -26,7 +26,7 @@ Line : 3 Error : Floating point exception
 push int16(999999999999999999999999999)
 exit
 ------------------------------- result : -------------------------------
-stoi: out of range
+Line : 1 Error : std::exception
 ------------------------------- test/correction/test4.avm -------------------------------
 push int16(32 ;)
 pu int(32))
@@ -43,7 +43,7 @@ push int32(42)
 assert int32(0)
 exit
 ------------------------------- result : -------------------------------
-Assertion failed: (!_stack.back()->toString().compare(v->toString())), function ft_assert, file src/Vm/Computor.cpp, line 66.
+Line : 2 Error : Assertion Failed
 ------------------------------- test/correction/test7.avm -------------------------------
 push int32(42)
 add
@@ -68,7 +68,11 @@ print
 pop
 exit
 ------------------------------- result : -------------------------------
-Line : 11 Error : Stack is empty
+p
+l
+o
+p
+!
 ------------------------------- test/others/empty_stack.avm -------------------------------
 pop
 exit
@@ -146,6 +150,7 @@ add
 exit
 
 ------------------------------- result : -------------------------------
+Line : 1 Error : std::exception
 ------------------------------- test/overflow/div/double.avm -------------------------------
 push double(2147483647)
 push double(2)
@@ -162,29 +167,6 @@ exit
 
 ------------------------------- result : -------------------------------
 Line : 2 Error : Unkown Instruction
-------------------------------- test/overflow/div/int16.avm -------------------------------
-push int16(-32767)
-push int16(2)
-div
-exit
-
-------------------------------- result : -------------------------------
-------------------------------- test/overflow/div/int32.avm -------------------------------
-push int32(2147483647)
-push int32(2)
-div
-exit
-
-------------------------------- result : -------------------------------
-src/Operand/TOperand.hpp:256:43: runtime error: signed integer overflow: 2147483647 * 2 cannot be represented in type 'int'
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior src/Operand/TOperand.hpp:256:43 in 
-------------------------------- test/overflow/div/int8.avm -------------------------------
-push int8(255)
-push int8(2)
-div
-exit
-
-------------------------------- result : -------------------------------
 ------------------------------- test/overflow/mod/double.avm -------------------------------
 push double(2147483647)
 push double(2)
@@ -208,6 +190,7 @@ sub
 exit
 
 ------------------------------- result : -------------------------------
+Line : 3 Error : Value undeflow
 ------------------------------- test/overflow/mod/int32.avm -------------------------------
 push int32(-2147483647)
 push int32(-2)
@@ -222,6 +205,7 @@ mod
 exit
 
 ------------------------------- result : -------------------------------
+Line : 1 Error : std::exception
 ------------------------------- test/overflow/mul/double.avm -------------------------------
 push double(2147483647)
 push double(2)
@@ -261,6 +245,7 @@ mul
 exit
 
 ------------------------------- result : -------------------------------
+Line : 1 Error : std::exception
 ------------------------------- test/overflow/sub/double.avm -------------------------------
 push double(2147483647)
 push double(2)
@@ -284,6 +269,7 @@ sub
 exit
 
 ------------------------------- result : -------------------------------
+Line : 3 Error : Value overflow
 ------------------------------- test/overflow/sub/int32.avm -------------------------------
 push int32(2147483647)
 push int32(-2)
@@ -291,8 +277,7 @@ sub
 exit
 
 ------------------------------- result : -------------------------------
-src/Operand/TOperand.hpp:250:43: runtime error: signed integer overflow: 2147483647 - -2 cannot be represented in type 'int'
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior src/Operand/TOperand.hpp:250:43 in 
+Line : 3 Error : Value overflow
 ------------------------------- test/overflow/sub/int8.avm -------------------------------
 push int8(255)
 push int8(-2)
@@ -300,7 +285,7 @@ sub
 exit
 
 ------------------------------- result : -------------------------------
-Line : 3 Error : Value undeflow
+Line : 1 Error : std::exception
 ------------------------------- test/underflow/add/double.avm -------------------------------
 push double(2147483647)
 push double(2)
@@ -340,6 +325,7 @@ add
 exit
 
 ------------------------------- result : -------------------------------
+Line : 1 Error : std::exception
 ------------------------------- test/underflow/div/double.avm -------------------------------
 push double(2147483647)
 push double(2)
@@ -356,29 +342,6 @@ exit
 
 ------------------------------- result : -------------------------------
 Line : 2 Error : Unkown Instruction
-------------------------------- test/underflow/div/int16.avm -------------------------------
-push int16(-32767)
-push int16(2)
-div
-exit
-
-------------------------------- result : -------------------------------
-------------------------------- test/underflow/div/int32.avm -------------------------------
-push int32(2147483647)
-push int32(2)
-div
-exit
-
-------------------------------- result : -------------------------------
-src/Operand/TOperand.hpp:256:43: runtime error: signed integer overflow: 2147483647 * 2 cannot be represented in type 'int'
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior src/Operand/TOperand.hpp:256:43 in 
-------------------------------- test/underflow/div/int8.avm -------------------------------
-push int8(255)
-push int8(2)
-div
-exit
-
-------------------------------- result : -------------------------------
 ------------------------------- test/underflow/mod/double.avm -------------------------------
 push double(2147483647)
 push double(2)
@@ -402,6 +365,7 @@ sub
 exit
 
 ------------------------------- result : -------------------------------
+Line : 3 Error : Value undeflow
 ------------------------------- test/underflow/mod/int32.avm -------------------------------
 push int32(-2147483647)
 push int32(-2)
@@ -416,6 +380,7 @@ mod
 exit
 
 ------------------------------- result : -------------------------------
+Line : 1 Error : std::exception
 ------------------------------- test/underflow/mul/double.avm -------------------------------
 push double(2147483647)
 push double(2)
@@ -455,6 +420,7 @@ mul
 exit
 
 ------------------------------- result : -------------------------------
+Line : 1 Error : std::exception
 ------------------------------- test/underflow/sub/double.avm -------------------------------
 push double(-2147483647)
 push double(2)
@@ -478,6 +444,7 @@ sub
 exit
 
 ------------------------------- result : -------------------------------
+Line : 3 Error : Value undeflow
 ------------------------------- test/underflow/sub/int32.avm -------------------------------
 push int32(-2147483647)
 push int32(2)
@@ -485,8 +452,7 @@ sub
 exit
 
 ------------------------------- result : -------------------------------
-src/Operand/TOperand.hpp:250:43: runtime error: signed integer overflow: -2147483647 - 2 cannot be represented in type 'int'
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior src/Operand/TOperand.hpp:250:43 in 
+Line : 3 Error : Value undeflow
 ------------------------------- test/underflow/sub/int8.avm -------------------------------
 push int8(-255)
 push int8(2)
@@ -494,4 +460,4 @@ sub
 exit
 
 ------------------------------- result : -------------------------------
-Line : 3 Error : Value overflow
+Line : 1 Error : std::exception

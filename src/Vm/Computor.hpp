@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:52 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/26 10:21:53 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/28 13:27:58 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #ifndef ABSTRACT_VM_COMPUTOR_H
 #define ABSTRACT_VM_COMPUTOR_H
 
-/* #include "../Operand/IOperand.hpp" */
+#include "../Operand/TOperand.hpp"
 #include <iostream>
 #include <vector>
 #include <exception>

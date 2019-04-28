@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/28 13:12:17 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/28 13:28:57 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ void		Computor::ft_assert(IOperand const * v)
 {
 	if (_stack.size() < 1)
 		throw EmptyStackException();
-	assert(!_stack.back()->toString().compare(v->toString()));
+	if(_stack.back()->toString().compare(v->toString()))
+		throw AssertException();
 }
 
 void		Computor::push(IOperand const * op)
 {
-	/* check_stack(); */
 	_stack.push_back(std::shared_ptr< const IOperand>(op));
 }
 
@@ -111,8 +111,9 @@ void  Computor::mod()
 
 void  Computor::print()
 {
-	OP_PTR op = get_elem(1);
-	/* std::cout << static_cast<char>(op[0]->toString()); */
+	if (_stack.back()->getType() != INT8)
+		throw AssertException();
+	std::cout << reinterpret_cast<TOperand<int8_t> const *>(_stack.back().get())->get_value() << std::endl;
 }
 
 void	Computor::exit()

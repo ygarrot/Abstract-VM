@@ -1,5 +1,0 @@
-push int8(255)
-push int8(2)
-div
-exit
-

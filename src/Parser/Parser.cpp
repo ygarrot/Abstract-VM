@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:37:19 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/28 13:01:10 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/28 13:56:51 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,15 @@ void Parser::parse()
 		switch (token->get_type())
 		{
 			case TokenType::Value:
-				token->op = OpFactory.createOperand(token->get_str());
+				try
+				{
+					token->op = OpFactory.createOperand(token->get_str());
+				}
+				catch (std::exception &e)
+				{
+					Token::print_line_error(token->get_line());
+					throw e;
+				}
 				value_expected = false;
 				break;
 			case TokenType::Instruction:

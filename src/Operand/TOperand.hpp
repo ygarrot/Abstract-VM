@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:09:14 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/27 13:49:24 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/28 14:27:57 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ eOperandType TOperand<T>::getType( void ) const
 }
 
 	template<typename T>
-int subOvf(T a, T b) 
+void subOvf(T a, T b) 
 { 
 	std::feclearexcept(FE_ALL_EXCEPT);
 	std::fetestexcept(FE_OVERFLOW);
@@ -162,14 +162,13 @@ int subOvf(T a, T b)
 		std::cout << "overflow";
 	if (std::fetestexcept(FE_UNDERFLOW))
 		std::cout << "underflow";
-	return 1;
-} 
+}
 
 template<typename T>
 template<typename B>
 void TOperand<T>::checkDivOverflow(B a, B b) const
 { 
-	if ( (b == 0.0 || ( (a == std::numeric_limits<B>::max()) && (b == -1) ) ))
+	if ( (b == 0.0 || ( (a == std::numeric_limits<B>::max()) && (b == -1.0) ) ))
 	{
 		throw FloatingPointException(); 
 	}
@@ -179,7 +178,7 @@ template<typename T>
 template<typename B>
 void TOperand<T>::checkModOverflow(B a, B b) const
 { 
-	if ( (b == 0.0 || ( (a == std::numeric_limits<B>::max()) && (b == -1) ) ))
+	if ( (b == 0.0 || ( (a == std::numeric_limits<B>::max()) && (b == -1.0) ) ))
 	{
 		throw FloatingPointException(); 
 	}
@@ -203,8 +202,9 @@ template<typename T>
 template<typename B>
 void TOperand<T>::checkSubOverflow(B a, B b) const
 { 
-	if ((a < 0.0) == (b < 0.0)
-			&& std::abs(b) > std::numeric_limits<B>::min() + std::abs(a)) {
+	if ((a < 0.0) != (b < 0.0)
+			&& std::abs(b) > std::numeric_limits<B>::min() + std::abs(a))
+   	{
 		a < 0.0 ? throw ValueUnderflowException() : throw ValueOverflowException();
 	}
 } 
@@ -213,7 +213,7 @@ template<typename T>
 template<typename B>
 void TOperand<T>::checkAddOverflow(B a, B b) const
 { 
-	if ((a < 0) == (b < 0)
+	if ((a < 0.0) == (b < 0.0)
 			&& std::abs(b) > std::numeric_limits<B>::max() - std::abs(a)) {
 		a < 0.0 ? throw ValueUnderflowException() : throw ValueOverflowException();
 	}
