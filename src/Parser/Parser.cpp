@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:37:19 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/29 11:53:40 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/29 13:26:30 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ void	Parser::setFunction(Token * token, bool & value_expected)
 		{ "mul", &Computor::mul},
 		{ "div", &Computor::div},
 		{ "mod", &Computor::mod},
+		{ "or", &Computor::ft_or},
+		{ "and", &Computor::ft_and},
+		{ "xor", &Computor::ft_xor},
 		{ "print", &Computor::print},
 		{ "exit", &Computor::exit}
 	};

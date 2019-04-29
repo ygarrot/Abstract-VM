@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:09:14 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/29 11:28:30 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/29 13:25:18 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ enum eFunctionType
 	MULT,
 	DIV,
 	MOD,
+	OR,
+	AND,
+	XOR,
 };
 
 class OperandFactory
@@ -77,6 +80,8 @@ class TOperand: public IOperand {
 			void checkModOverflow(B a, B b) const;
 		template<typename B>
 			void checkDivOverflow(B a, B b) const;
+		template<typename B>
+			void checkBitwise(B a, B b) const;
 
 		auto get_highest_prec(TOperand<T> const & rhs) const;
 		template<typename B>
@@ -93,6 +98,11 @@ class TOperand: public IOperand {
 		virtual	IOperand const * operator*( IOperand const & rhs ) const;
 		virtual	IOperand const * operator/( IOperand const & rhs ) const;
 		virtual	IOperand const * operator%( IOperand const & rhs ) const;
+
+		virtual	IOperand const * operator|( IOperand const & rhs ) const;
+		virtual	IOperand const * operator&( IOperand const & rhs ) const;
+		virtual	IOperand const * operator^( IOperand const & rhs ) const;
+
 		virtual	std::string const & toString( void ) const;
 		std::string _str;
 		T _n;
@@ -199,6 +209,17 @@ void TOperand<T>::checkSubOverflow(B a, B b) const
 
 template<typename T>
 template<typename B>
+void TOperand<T>::checkBitwise(B a, B b) const
+{ 
+	(void)a;
+	(void)b;
+	if (typeid(B) == typeid(float))
+		throw BitwiseOnFloatException();
+} 
+
+
+template<typename T>
+template<typename B>
 void TOperand<T>::checkAddOverflow(B a, B b) const
 { 
 	if ((a < 0.0) == (b < 0.0)
@@ -245,6 +266,15 @@ IOperand const * TOperand<T>::apply_func(eOperandType operandType, eFunctionType
 		case MOD:
 			check_exceptions(a, b, &TOperand<T>::checkModOverflow<B>);
 			return CreateOperand<B>(operandType, fmod(a , b));
+		case OR:
+			check_exceptions(a, b, &TOperand<T>::checkBitwise<B>);
+			return CreateOperand<B>(operandType, static_cast<int>(a) | static_cast<int>(b));
+		case AND:
+			check_exceptions(a, b, &TOperand<T>::checkBitwise<B>);
+			return CreateOperand<B>(operandType, static_cast<int>(a) & static_cast<int>(b));
+		case XOR:
+			check_exceptions(a, b, &TOperand<T>::checkBitwise<B>);
+			return CreateOperand<B>(operandType, static_cast<int>(a) ^ static_cast<int>(b));
 	}
 }
 
@@ -300,6 +330,24 @@ IOperand const * TOperand<T>::operator/( IOperand const & rhs ) const
 	return choose_type(rhs, DIV);
 }
 
+
+template<typename T>
+IOperand const * TOperand<T>::operator|( IOperand const & rhs ) const
+{
+	return choose_type(rhs, OR);
+}
+
+template<typename T>
+IOperand const * TOperand<T>::operator&( IOperand const & rhs ) const
+{
+	return choose_type(rhs, AND);
+}
+
+template<typename T>
+IOperand const * TOperand<T>::operator^( IOperand const & rhs ) const
+{
+	return choose_type(rhs, XOR);
+}
 
 template<typename T>
 IOperand const * TOperand<T>::operator%( IOperand const & rhs ) const

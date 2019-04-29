@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/29 12:11:13 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/29 13:19:30 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,24 @@ void  Computor::mod()
 {
 	OP_PTR op = get_elem(2);
 	push(*op[0] % *op[1]);
+}
+
+void  Computor::ft_or()
+{
+	OP_PTR op = get_elem(2);
+	push(*op[0] | *op[1]);
+}
+
+void  Computor::ft_and()
+{
+	OP_PTR op = get_elem(2);
+	push(*op[0] | *op[1]);
+}
+
+void  Computor::ft_xor()
+{
+	OP_PTR op = get_elem(2);
+	push(*op[0] | *op[1]);
 }
 
 void  Computor::print()

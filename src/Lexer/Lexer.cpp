@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 16:04:05 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/29 12:45:24 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/29 13:09:59 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ Lexer     &Lexer::operator=(Lexer const & src)
 	return *this;
 }
 
+#include <boost/algorithm/string.hpp>
+
 bool Lexer::setToken(std::string nl)
 {
 	TokenType	token_type;
@@ -51,6 +53,10 @@ bool Lexer::setToken(std::string nl)
 	std::stringstream ss(nl);
 	while (getline(ss, s, ' '))
 	{
+		s = std::regex_replace(s, std::regex("\\s+"), "");
+		if (s.empty())
+			continue;
+		/* std::cout << "[" + s+  "]"<< std::endl; */
 		if (regex_match(s, std::regex(INSTRUCTION)))
 		{
 			token_type = TokenType::Instruction;

@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:52 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/29 12:09:32 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/29 13:19:17 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ class Computor
 
 		void		min();
 		void		max();
+
+		void		ft_or();
+		void		ft_and();
+		void		ft_xor();
 
 		void		check_stack(size_t size);
 		TOKEN_PTR get_tokens(){return _tokens;};
