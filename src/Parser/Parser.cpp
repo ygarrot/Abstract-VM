@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:37:19 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/29 13:26:30 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/29 13:47:36 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ Parser     &Parser::operator=(Parser const & src)
 	(void)src;
 	return *this;
 }
+
 void	Parser::setFunction(Token * token, bool & value_expected)
 {
 	func_tab_t funcMap =
@@ -79,36 +80,35 @@ void	Parser::setFunction(Token * token, bool & value_expected)
 	token->method = funcMap.at(token->get_str());
 }
 
-void Parser::parse()
+int Parser::parse()
 {
+	int ret = 1;
 	bool value_expected = false;
 
 	for (std::shared_ptr<Token> token: _tokens)
 	{
-		switch (token->get_type())
-		{
-			case TokenType::Value:
-				try
-				{
+		try{
+			switch (token->get_type())
+			{
+				case TokenType::Value:
 					token->op = OpFactory.createOperand(token->get_str());
-				}
-				catch (TokenException &e)
-				{
-					e.set_str(token->get_line());
-					throw e;
-				}
-				value_expected = false;
-				break;
-			case TokenType::Instruction:
-				if (value_expected)
-				{
-					throw UnknownInstructionException(token->get_line());
-				}
-				setFunction(token.get(), value_expected);
-				break;
-			default:
-				;
-				/* return ; */
+					value_expected = false;
+					break;
+				case TokenType::Instruction:
+					if (value_expected)
+						throw UnknownInstructionException();
+					setFunction(token.get(), value_expected);
+					break;
+				default:
+					;
+			}
+		}
+		catch (TokenException &e)
+		{
+			e.set_str(token->get_line());
+			std::cout << e.what() << "\n";
+			ret = -1;
 		}
 	}
+	return ret;
 }

@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 17:54:30 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/29 12:50:22 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/29 13:49:50 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@ int main(int ac, char **av)
 
 	try
 	{
-		ac > 1  ? l.lex(av[1]) : l.lex();
+		int ret = ac > 1  ? l.lex(av[1]) : l.lex();
 		p.set_tokens(l.get_tokens());
-		p.parse();
+		if (p.parse() < 0 || ret < 0)
+			return EXIT_FAILURE;
 		c.set_tokens(p.get_tokens());
 		c.visit();
 	}

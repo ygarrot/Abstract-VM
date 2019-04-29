@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 16:04:05 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/29 13:09:59 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/29 13:43:05 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,26 +74,44 @@ bool Lexer::setToken(std::string nl)
 	return is_end;
 }
 
-void Lexer::lex()
+int Lexer::lex()
 {
+	int ret = 1;
+
 	for (std::string line; std::getline(std::cin, line);)
 	{
-		if (!setToken(line)) return ;
+		try {
+			if (!setToken(line)) return 1;
+		}
+		catch (TokenException & e)
+		{
+			std::cout << e.what() << "\n";
+			ret = -1;
+		}
 	}
+	return ret;
 }
 
-void Lexer::lex(std::string toParse)
+int Lexer::lex(std::string toParse)
 {
+	int ret = 1;
 	std::istringstream f(toParse);
 	std::ifstream fs;
 	std::string nl;
 
 	fs.open (toParse);
 	if (!fs.is_open())
-		return ;
-
+		return -1;
 	while (getline(fs, nl, '\n'))
 	{
-		if (!setToken(nl)) return ;
+		try {
+			if (!setToken(nl)) return 1;
+		}
+		catch (TokenException & e)
+		{
+			std::cout << e.what() << "\n";
+			ret = -1;
+		}
 	}
+	return ret;
 }
