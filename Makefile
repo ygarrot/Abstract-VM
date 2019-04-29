@@ -6,7 +6,7 @@
 #    By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/11 12:06:15 by ygarrot           #+#    #+#              #
-#    Updated: 2019/04/27 14:14:52 by ygarrot          ###   ########.fr        #
+#    Updated: 2019/04/29 12:04:50 by ygarrot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ INCDIR =  \
 SRC = \
 	  Exceptions/Exceptions.cpp\
 	  Lexer/Lexer.cpp\
+	  Lexer/Token.cpp \
 	  main.cpp\
 	  Operand/OperandFactory.cpp\
 	  Parser/Parser.cpp\

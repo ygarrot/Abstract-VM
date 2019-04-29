@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/28 17:42:21 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/29 12:11:13 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void		Computor::visit()
 	for (TOKEN_PTR::iterator it = _tokens.begin(); it != _tokens.end(); ++it)
 	{
 		Token *token = it->get();
-		try{
+		try
+		{
 			switch (token->get_type())
 			{
 				case TokenType::Instruction:
@@ -54,8 +55,10 @@ void		Computor::visit()
 		{
 			e.set_str(token->get_line());
 			throw e;
-			/* throw TokenException(token->get_line()); */
 		}
+		if (it + 1 == _tokens.end())
+			if (token->get_str().compare("exit"))
+				throw NoExitException(token->get_line()); 
 	}
 }
 
@@ -63,7 +66,9 @@ void		Computor::ft_assert(IOperand const * v)
 {
 	if (_stack.size() < 1)
 		throw EmptyStackException();
-	if(_stack.back()->toString().compare(v->toString()))
+	if (v->getType() != _stack.back()->getType())
+		throw AssertException();
+	if (_stack.back()->toString().compare(v->toString()))
 		throw AssertException();
 }
 
@@ -129,7 +134,9 @@ void  Computor::print()
 {
 	if (_stack.back()->getType() != INT8)
 		throw AssertException();
+	std::cout << YELLOW;
 	std::cout << reinterpret_cast<TOperand<int8_t> const *>(_stack.back().get())->get_value() << std::endl;
+	std::cout << RESET;
 }
 
 void	Computor::exit()
@@ -138,10 +145,11 @@ void	Computor::exit()
 
 void  Computor::dump()
 {
+	std::cout << GREEN;
 	for (OP_PTR::iterator it = _stack.begin(); it != _stack.end(); ++it)
 	{
 		std::cout << it->get()->toString() << "\n"; 
 	}
+	std::cout << RESET;
 }
-
 

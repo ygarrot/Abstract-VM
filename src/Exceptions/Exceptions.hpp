@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 12:55:13 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/28 17:24:00 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/29 12:11:20 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,22 @@
 #include <iostream>
 #include <string>
 
+#define RED "\033[1;31m"
+#define GREEN "\033[1;32m"
+#define YELLOW "\033[1;33m" 
+#define RESET "\033[0m" 
+
 class TokenException : public std::exception
 {
 	public:
-		TokenException(std::string defaul, int line): _default(defaul){ set_str(line);};
-		TokenException(): _str(_default){};
-		TokenException(int line) { set_str(line);};
-		/* TokenException(TokenException const &src); */
-		/* TokenException & operator=(TokenException const & src); */
-		void set_str(int line) { _str = "Line : " + std::to_string(line) + " Error : " + _default; };
-		virtual ~TokenException(void) throw() {};
-		virtual const char * what(void) const throw() {return _str.c_str();}
+		TokenException(std::string defaul, int line);
+		TokenException();
+		TokenException(int line);
+		TokenException(TokenException const &src);
+		TokenException & operator=(TokenException const & src);
+		void set_str(int line);
+		virtual ~TokenException(void) throw();
+		virtual const char * what(void) const throw();
 	protected:
 		std::string _default;
 		std::string _str;
@@ -82,6 +87,16 @@ class FloatingPointException : public TokenException
 		FloatingPointException(FloatingPointException const &src);
 		FloatingPointException & operator=(FloatingPointException const & src);
 		virtual ~FloatingPointException(void) throw() {};
+};
+
+class NoExitException : public TokenException
+{
+	public:
+		explicit NoExitException(){_default= "no exit found";};
+		NoExitException(int line) : TokenException( "no exit found", line) {};
+		NoExitException(NoExitException const &src);
+		NoExitException & operator=(NoExitException const & src);
+		virtual ~NoExitException(void) throw() {};
 };
 
 class AssertException : public TokenException

@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:37:19 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/28 17:44:43 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/29 11:53:40 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,16 @@ Parser::Parser(std::string target)
 Parser::Parser() 
 {
 
+}
+
+TOKEN_PTR Parser::get_tokens()
+{
+	return _tokens;
+}
+
+void Parser::set_tokens(TOKEN_PTR tokens)
+{
+	_tokens = tokens;
 }
 
 Parser::~Parser() 

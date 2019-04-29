@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:09:14 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/28 17:45:16 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/29 11:28:30 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,20 +152,6 @@ eOperandType TOperand<T>::getType( void ) const
 	return (this->_type);
 }
 
-	template<typename T>
-void subOvf(T a, T b) 
-{ 
-	std::feclearexcept(FE_ALL_EXCEPT);
-	std::fetestexcept(FE_OVERFLOW);
-	std::fetestexcept(FE_UNDERFLOW);
-	(void)a;(void)b;
-	std::cout << std::exp(a + b) << std::endl;
-	if (std::fetestexcept(FE_OVERFLOW))
-		std::cout << "overflow";
-	if (std::fetestexcept(FE_UNDERFLOW))
-		std::cout << "underflow";
-}
-
 template<typename T>
 template<typename B>
 void TOperand<T>::checkDivOverflow(B a, B b) const
@@ -205,7 +191,7 @@ template<typename B>
 void TOperand<T>::checkSubOverflow(B a, B b) const
 { 
 	if ((a < 0.0) != (b < 0.0)
-			&& std::abs(b) > std::numeric_limits<B>::min() + std::abs(a))
+			&& std::abs(b) > std::numeric_limits<B>::max() - std::abs(a))
    	{
 		a < 0.0 ? throw ValueUnderflowException() : throw ValueOverflowException();
 	}
