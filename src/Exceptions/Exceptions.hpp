@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 12:55:13 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/29 12:11:20 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/29 14:02:18 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,21 @@ class AssertException : public TokenException
 		virtual ~AssertException(void) throw() {};
 };
 
+class NoArgumentException : public TokenException
+{
+	public:
+		explicit NoArgumentException(){_default= "instruction expected an argument";};
+		NoArgumentException(int line) : TokenException( "instruction expected an argument", line) {};
+		NoArgumentException(NoArgumentException const &src);
+		NoArgumentException & operator=(NoArgumentException const & src);
+		virtual ~NoArgumentException(void) throw() {};
+};
+
 class NotEnoughValueException : public TokenException
 {
 	public:
-		explicit NotEnoughValueException(){_default= "Not enough Value exception";};
-		NotEnoughValueException(int line) : TokenException( "Not enough Value exception", line) {};
+		explicit NotEnoughValueException(){_default= "The stack is composed of strictly less that two values";};
+		NotEnoughValueException(int line) : TokenException( "The stack is composed of strictly less that two values", line) {};
 		NotEnoughValueException(NotEnoughValueException const &src);
 		NotEnoughValueException & operator=(NotEnoughValueException const & src);
 		virtual ~NotEnoughValueException(void) throw() {};

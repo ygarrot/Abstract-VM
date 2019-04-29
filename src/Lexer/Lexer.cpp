@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 16:04:05 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/29 13:43:05 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/29 13:59:16 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ Lexer::Lexer(std::string target)
 	(void)target;
 }
 
-Lexer::Lexer() 
+Lexer::Lexer() :_lines(-1)
 {
 }
 
@@ -37,8 +37,6 @@ Lexer     &Lexer::operator=(Lexer const & src)
 	(void)src;
 	return *this;
 }
-
-#include <boost/algorithm/string.hpp>
 
 bool Lexer::setToken(std::string nl)
 {

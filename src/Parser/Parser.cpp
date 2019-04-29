@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:37:19 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/29 13:47:36 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/29 14:02:51 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,14 @@ int Parser::parse()
 			switch (token->get_type())
 			{
 				case TokenType::Value:
-					token->op = OpFactory.createOperand(token->get_str());
 					value_expected = false;
+					token->op = OpFactory.createOperand(token->get_str());
 					break;
 				case TokenType::Instruction:
 					if (value_expected)
-						throw UnknownInstructionException();
+					{
+						throw NoArgumentException();
+					}
 					setFunction(token.get(), value_expected);
 					break;
 				default:

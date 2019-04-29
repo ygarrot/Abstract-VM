@@ -10,4 +10,5 @@ do
 	cat $file >> .log
 	echo "-------------------------------" result : "-------------------------------" >>.log
 	trap `./vm $file 2>>.log >>.log` 6
+	# ./vm $file
 done

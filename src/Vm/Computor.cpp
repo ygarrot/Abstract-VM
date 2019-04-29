@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/29 13:19:30 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/29 14:24:37 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ void	Computor::exit()
 void  Computor::dump()
 {
 	std::cout << GREEN;
-	for (OP_PTR::iterator it = _stack.begin(); it != _stack.end(); ++it)
+	for (OP_PTR::reverse_iterator it = _stack.rbegin(); it != _stack.rend(); ++it)
 	{
 		std::cout << it->get()->toString() << "\n"; 
 	}
