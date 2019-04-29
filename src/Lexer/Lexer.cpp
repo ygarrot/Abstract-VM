@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 16:04:05 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/29 13:59:16 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/29 14:50:33 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ bool Lexer::setToken(std::string nl)
 	is_end = !regex_match(nl, std::regex(END));
 	nl = std::regex_replace (nl, std::regex(COMMENT),"$1");
 	nl = std::regex_replace (nl, std::regex(COMMENT2),"");
+	nl  = std::regex_replace(nl, std::regex("\\s+"), " ");
 	std::stringstream ss(nl);
 	while (getline(ss, s, ' '))
 	{

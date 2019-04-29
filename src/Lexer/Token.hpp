@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 12:13:55 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/29 11:52:22 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/29 15:04:34 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ class Token
 		void set_str(std::string str);
 		void set_type(TokenType type);
 		TokenType get_type() const;
-		const IOperand * op;
+		const IOperand  *op;
 		meth						method;
 		std::function<void(Computor*, IOperand const * rhs)>	f;
 	private:

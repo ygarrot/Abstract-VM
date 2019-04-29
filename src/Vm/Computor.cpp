@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/29 14:24:37 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/29 15:19:45 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void		Computor::visit()
 
 void		Computor::ft_assert(IOperand const * v)
 {
+	std::shared_ptr<IOperand const > t(v);
+	(void)v;
 	if (_stack.size() < 1)
 		throw EmptyStackException();
 	if (v->getType() != _stack.back()->getType())

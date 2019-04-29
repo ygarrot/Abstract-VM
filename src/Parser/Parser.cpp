@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:37:19 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/29 14:02:51 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/04/29 15:04:38 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void	Parser::setFunction(Token * token, bool & value_expected)
 		{ "or", &Computor::ft_or},
 		{ "and", &Computor::ft_and},
 		{ "xor", &Computor::ft_xor},
+		{ "min", &Computor::min},
+		{ "max", &Computor::max},
 		{ "print", &Computor::print},
 		{ "exit", &Computor::exit}
 	};
