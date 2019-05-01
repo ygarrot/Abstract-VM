@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/05/01 15:33:15 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/01 15:48:22 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ OP_PTR Computor::get_elem(size_t n)
 
 void		Computor::visit()
 {
+OP_PTR ret; 
 	for (TOKEN_PTR::iterator it = _tokens.begin(); it != _tokens.end(); ++it)
 	{
 		Token *token = it->get();
@@ -73,10 +74,11 @@ void		Computor::visit()
 					}
 					else
 					{
-						OP_PTR ret(_stack.end() - 2, _stack.end());
+						if (_verbose && token->verbose.arg_number == 2 && _stack.size() >= 2)
+							ret = OP_PTR(_stack.end() - 2, _stack.end());
 						token->verbose.method(this);
 						if (_verbose) displayFuncName(token);
-						if (_verbose && token->verbose.arg_number == 2)
+						if (_verbose && token->verbose.arg_number == 2 )
 							verboseTwoArg(token, ret);
 						if (_verbose) std::cout << "\n";
 					}

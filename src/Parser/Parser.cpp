@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:37:19 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/05/01 14:56:41 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/01 15:58:54 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	Parser::setFunction(Token * token, bool & value_expected)
 		{ "push", &verboseDic[12]},
 		{ "assert", &verboseDic[13]}
 	};
-	value_expected = !token->get_str().compare("push") && !token->get_str().compare("assert");
+	value_expected = !token->get_str().compare("push") | !token->get_str().compare("assert");
 	token->verbose = *funcMap.at(token->get_str());
 }
 

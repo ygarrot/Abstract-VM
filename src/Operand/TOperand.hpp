@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:09:14 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/05/01 13:47:48 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/01 15:52:14 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,6 +300,7 @@ IOperand const * TOperand<T>::apply_func(eOperandType operandType, eFunctionType
 	fmap.insert(std::make_pair(XOR, &operandDic[7]));
 
 	t_func choice = *fmap.at(functionType);
+	check_exceptions(a, b, choice.check);
 	return (this->*choice.apply)(a, b, operandType);
 }
 
