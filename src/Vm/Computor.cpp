@@ -6,11 +6,20 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/29 15:19:45 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/01 14:42:42 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Computor.hpp"
+
+void	Computor::verbose(Token *token, OP_PTR op)
+{
+	std::cout << token->verbose.func_name << " "
+	<< (*op[0]).toString() << " "
+	<< token->verbose.op << " "
+	<< (*op[1]).toString() << " = "
+	<< _stack.back()->toString() << "\n";
+}
 
 void	Computor::check_stack(size_t size)
 {
@@ -42,10 +51,14 @@ void		Computor::visit()
 					if (it + 1 != _tokens.end() && (it + 1)->get()->get_type() != TokenType::Instruction)
 					{
 						++it;
-						token->f(this, it->get()->op);
+						token->verbose.f(this, it->get()->op);
 					}
 					else
-						token->method(this);
+					{
+						OP_PTR ret(_stack.end() - 2, _stack.end());
+						token->verbose.method(this);
+						verbose(token, ret);
+					}
 					break;
 				default:
 					;
@@ -56,10 +69,9 @@ void		Computor::visit()
 			e.set_str(token->get_line());
 			throw e;
 		}
-		if (it + 1 == _tokens.end())
-			if (token->get_str().compare("exit"))
-				throw NoExitException(token->get_line()); 
 	}
+	if (_tokens.back()->get_str().compare("exit"))
+		throw NoExitException(_tokens.back()->get_line()); 
 }
 
 void		Computor::ft_assert(IOperand const * v)

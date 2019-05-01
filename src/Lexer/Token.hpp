@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 12:13:55 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/29 15:04:34 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/01 14:46:52 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,14 @@ enum class TokenType
 
 class Computor;
 typedef std::function<void(Computor*)> meth;
-typedef std::map<std::string, meth> func_tab_t;
+
+typedef struct s_verbose
+{
+	std::string	func_name;
+	std::string	op;
+	meth		method;
+	std::function<void(Computor*, IOperand const * rhs)>	f;
+}		t_verbose;
 
 class Token
 {
@@ -42,12 +49,10 @@ class Token
 		void set_type(TokenType type);
 		TokenType get_type() const;
 		const IOperand  *op;
-		meth						method;
-		std::function<void(Computor*, IOperand const * rhs)>	f;
+		t_verbose verbose;
 	private:
 		TokenType	_type;
 		std::string	_str;
 		int			_line;
 };
-
 #endif

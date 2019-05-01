@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:37:19 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/29 15:04:38 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/01 14:45:53 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,36 +50,47 @@ Parser     &Parser::operator=(Parser const & src)
 
 void	Parser::setFunction(Token * token, bool & value_expected)
 {
+	t_verbose verboseDic[] =
+	{
+		{ "pop", "", &Computor::pop, 0},
+		{ "dump","", &Computor::dump, 0},
+		{ "add", "+", &Computor::add, 0},
+		{ "sub", "-", &Computor::sub, 0},
+		{ "mul", "*", &Computor::mul, 0},
+		{ "div", "/", &Computor::div, 0},
+		{ "mod", "%", &Computor::mod, 0},
+		{ "or", "|", &Computor::ft_or, 0},
+		{ "and", "&", &Computor::ft_and, 0},
+		{ "xor", "^", &Computor::ft_xor, 0},
+		/* { "min", "<", &Computor::min, 0}, */
+		/* { "max", &Computor::max, 0}, */
+		{ "print", "", &Computor::print, 0},
+		{ "exit", "", &Computor::exit, 0},
+		{ "push", "", 0, &Computor::push},
+		{ "assert", "", 0, &Computor::ft_assert},
+	};
+
 	func_tab_t funcMap =
 	{
-		{ "pop", &Computor::pop},
-		{ "dump", &Computor::dump},
-		{ "add", &Computor::add},
-		{ "sub", &Computor::sub},
-		{ "mul", &Computor::mul},
-		{ "div", &Computor::div},
-		{ "mod", &Computor::mod},
-		{ "or", &Computor::ft_or},
-		{ "and", &Computor::ft_and},
-		{ "xor", &Computor::ft_xor},
-		{ "min", &Computor::min},
-		{ "max", &Computor::max},
-		{ "print", &Computor::print},
-		{ "exit", &Computor::exit}
+		{ "pop", &verboseDic[0]},
+		{ "dump", &verboseDic[1]},
+		{ "add", &verboseDic[2]},
+		{ "sub", &verboseDic[3]},
+		{ "mul", &verboseDic[4]},
+		{ "div", &verboseDic[5]},
+		{ "mod", &verboseDic[6]},
+		{ "or", &verboseDic[7]},
+		{ "and", &verboseDic[8]},
+		{ "xor", &verboseDic[9]},
+		/* { "min", &Computor::min}, */
+		/* { "max", &Computor::max}, */
+		{ "print", &verboseDic[10]},
+		{ "exit", &verboseDic[11]},
+		{ "push", &verboseDic[12]},
+		{ "assert", &verboseDic[13]}
 	};
-	func_tab_t::iterator it = funcMap.find(token->get_str());
-	if (it == funcMap.end())
-	{
-		value_expected = true;
-		if (!token->get_str().compare("push"))
-		{
-			token->f = &Computor::push;
-		}
-		else if (!token->get_str().compare("assert"))
-			token->f = &Computor::ft_assert;
-		return ;
-	}
-	token->method = funcMap.at(token->get_str());
+	value_expected = !token->get_str().compare("push") && !token->get_str().compare("assert");
+	token->verbose = *funcMap.at(token->get_str());
 }
 
 int Parser::parse()

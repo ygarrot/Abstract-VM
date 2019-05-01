@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:36:35 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/29 13:47:26 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/01 14:44:53 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 #include <stdexcept>
 
 class Int8;
+
+
+typedef std::map<std::string, t_verbose*> func_tab_t;
 
 class 					Parser
 {
