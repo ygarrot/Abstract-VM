@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:52 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/05/01 15:12:19 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/01 15:21:02 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ class Computor
 	public:
 		Computor &operator=(Computor const & src);
 		Computor(){};
+		Computor(bool verbose) : _verbose(verbose){};
 		Computor(std::string){};
 		Computor(Computor const & src){(void)src;};
 		~Computor(void){};
@@ -66,6 +67,7 @@ class Computor
 		void	verboseOneArg(IOperand const & op);
 		void	verboseTwoArg(Token *token, OP_PTR op);
 	private:
+		bool	_verbose;
 		OP_PTR _stack;
 		TOKEN_PTR	_tokens;
 };

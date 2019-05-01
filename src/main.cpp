@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 17:54:30 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/29 15:14:04 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/01 15:30:01 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 
 int main(int ac, char **av)
 {
+	bool verbose = ac > 2 && !strcmp(av[2], "-v");
 	Lexer l;
 	Parser p;
-	Computor c;
+	Computor c(verbose);
 
 	try
 	{

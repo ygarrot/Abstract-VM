@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/05/01 15:17:27 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/01 15:33:15 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,24 +65,25 @@ void		Computor::visit()
 				case TokenType::Instruction:
 					if (it + 1 != _tokens.end() && (it + 1)->get()->get_type() != TokenType::Instruction)
 					{
-						displayFuncName(token);
 						++it;
-						verboseOneArg(*it->get()->op);
+						if (_verbose) displayFuncName(token);
+						if (_verbose) verboseOneArg(*it->get()->op);
 						token->verbose.f(this, it->get()->op);
+						if (_verbose) std::cout << "\n";
 					}
 					else
 					{
 						OP_PTR ret(_stack.end() - 2, _stack.end());
 						token->verbose.method(this);
-						displayFuncName(token);
-						if (token->verbose.arg_number == 2)
+						if (_verbose) displayFuncName(token);
+						if (_verbose && token->verbose.arg_number == 2)
 							verboseTwoArg(token, ret);
+						if (_verbose) std::cout << "\n";
 					}
 					break;
 				default:
 					;
 			}
-			std::cout << "\n";
 		}
 		catch (TokenException &e)
 		{
