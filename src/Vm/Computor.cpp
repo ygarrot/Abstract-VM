@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/05/01 14:42:42 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/01 14:49:39 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void	Computor::verbose(Token *token, OP_PTR op)
 {
-	std::cout << token->verbose.func_name << " "
+	std::cout
+	<< "Line " << token->get_line() << " : " 
+	<< token->verbose.func_name << " : "
 	<< (*op[0]).toString() << " "
 	<< token->verbose.op << " "
 	<< (*op[1]).toString() << " = "
