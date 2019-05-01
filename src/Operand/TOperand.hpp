@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:09:14 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/05/01 11:20:31 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/01 13:47:48 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ class TOperand: public IOperand {
 		template<typename B>
 			IOperand const * CreateOperand(eOperandType type, B value) const;
 		template<typename B>
-		IOperand const * apply_func(eOperandType operandType, eFunctionType functionType, B a, B b) const;
+			IOperand const * apply_func(eOperandType operandType, eFunctionType functionType, B a, B b) const;
 		IOperand const * choose_type( IOperand const & rhs, eFunctionType functionType) const;
 
 		IOperand const * to_double( IOperand const & rhs, eFunctionType functionType, eOperandType type) const;
@@ -99,6 +99,23 @@ class TOperand: public IOperand {
 		IOperand const * to_int32_t( IOperand const & rhs, eFunctionType functionTyp, eOperandType typee) const;
 		template<typename B>
 			IOperand const * to_other( IOperand const & rhs, eFunctionType functionType, eOperandType type) const;
+
+		template<typename B>
+			IOperand const * add( B a, B b, eOperandType operandType) const;
+		template<typename B>
+			IOperand const * sub( B a, B b, eOperandType operandType) const;
+		template<typename B>
+			IOperand const * div( B a, B b, eOperandType operandType) const;
+		template<typename B>
+			IOperand const * mod( B a, B b, eOperandType operandType) const;
+		template<typename B>
+			IOperand const * mul( B a, B b, eOperandType operandType) const;
+		template<typename B>
+			IOperand const * ft_or( B a, B b, eOperandType operandType) const;
+		template<typename B>
+			IOperand const * ft_and( B a, B b, eOperandType operandType) const;
+		template<typename B>
+			IOperand const * ft_xor( B a, B b, eOperandType operandType) const;
 
 		virtual	IOperand const * operator+( IOperand const & rhs ) const;
 		virtual	IOperand const * operator-( IOperand const & rhs ) const;
@@ -111,15 +128,11 @@ class TOperand: public IOperand {
 		virtual	IOperand const * operator^( IOperand const & rhs ) const;
 
 		virtual	std::string const & toString( void ) const;
+	protected:
 		std::string _str;
 		T _n;
 		eOperandType _type;
-	protected:
 };
-
-
-/* template<typename T> */
-/* std::pair<int, B> TOperand<T>::get_type(IOperand const & op) const */
 
 template<typename T>
 template<typename B>
@@ -135,7 +148,6 @@ std::pair<B, B> TOperand<T>::get_type(IOperand const & op) const
 		return std::make_pair(static_cast<B>(this->_n), static_cast<B>(stof(op.toString())));
 	return std::make_pair(static_cast<B>(this->_n), static_cast<B>(stod(op.toString())));
 }
-
 
 template<typename T>
 template<typename B>
@@ -212,7 +224,7 @@ void TOperand<T>::checkSubOverflow(B a, B b) const
 { 
 	if ((a < 0.0) != (b < 0.0)
 			&& std::abs(b) > std::numeric_limits<B>::max() - std::abs(a))
-   	{
+	{
 		a < 0.0 ? throw ValueUnderflowException() : throw ValueOverflowException();
 	}
 } 
@@ -259,33 +271,36 @@ template<typename T>
 template<typename B>
 IOperand const * TOperand<T>::apply_func(eOperandType operandType, eFunctionType functionType, B a, B b) const
 {
-	switch (functionType)
+	typedef struct opFunc
 	{
-		case ADD:
-			check_exceptions(a, b, &TOperand<T>::checkAddOverflow<B>);
-			return CreateOperand<B>(operandType, a + b);
-		case SUB:
-			check_exceptions(a, b, &TOperand<T>::checkSubOverflow<B>);
-			return CreateOperand<B>(operandType, a - b);
-		case MULT:
-			check_exceptions(a, b, &TOperand<T>::checkMulOverflow<B>);
-			return CreateOperand<B>(operandType, a + b);
-		case DIV:
-			check_exceptions(a, b, &TOperand<T>::checkDivOverflow<B>);
-			return CreateOperand<B>(operandType, a * b);
-		case MOD:
-			check_exceptions(a, b, &TOperand<T>::checkModOverflow<B>);
-			return CreateOperand<B>(operandType, fmod(a , b));
-		case OR:
-			check_exceptions(a, b, &TOperand<T>::checkBitwise<B>);
-			return CreateOperand<B>(operandType, static_cast<int>(a) | static_cast<int>(b));
-		case AND:
-			check_exceptions(a, b, &TOperand<T>::checkBitwise<B>);
-			return CreateOperand<B>(operandType, static_cast<int>(a) & static_cast<int>(b));
-		case XOR:
-			check_exceptions(a, b, &TOperand<T>::checkBitwise<B>);
-			return CreateOperand<B>(operandType, static_cast<int>(a) ^ static_cast<int>(b));
-	}
+		char op;
+		IOperand const * (TOperand::*apply)(B a, B b, eOperandType t) const;
+		void (TOperand<T>::*check)(B a, B b) const;
+		opFunc(char c, IOperand const * (TOperand::*app)(B a, B b, eOperandType t) const, void (TOperand<T>::*ch)(B a, B b) const) : op(c), apply(app), check(ch){};
+	}t_func;
+	std::map <eFunctionType, t_func*> fmap ;
+	t_func operandDic[] =
+	{
+		{'+', &TOperand<T>::add, &TOperand<T>::checkAddOverflow<B>},
+		{'-', &TOperand<T>::sub, &TOperand<T>::checkSubOverflow<B>},
+		{'*', &TOperand<T>::mul, &TOperand<T>::checkMulOverflow<B>},
+		{'/', &TOperand<T>::div, &TOperand<T>::checkDivOverflow<B>},
+		{'%', &TOperand<T>::mod, &TOperand<T>::checkModOverflow<B>},
+		{'&', &TOperand<T>::ft_and, &TOperand<T>::checkBitwise<B>},
+		{'|', &TOperand<T>::ft_or, &TOperand<T>::checkBitwise<B>},
+		{'^', &TOperand<T>::ft_xor, &TOperand<T>::checkBitwise<B>},
+	};
+	fmap.insert(std::make_pair(ADD, &operandDic[0]));
+	fmap.insert(std::make_pair(SUB, &operandDic[1]));
+	fmap.insert(std::make_pair(MULT, &operandDic[2]));
+	fmap.insert(std::make_pair(DIV, &operandDic[3]));
+	fmap.insert(std::make_pair(MOD, &operandDic[4]));
+	fmap.insert(std::make_pair(AND, &operandDic[5]));
+	fmap.insert(std::make_pair(OR, &operandDic[6]));
+	fmap.insert(std::make_pair(XOR, &operandDic[7]));
+
+	t_func choice = *fmap.at(functionType);
+	return (this->*choice.apply)(a, b, operandType);
 }
 
 template<typename T>
@@ -299,7 +314,7 @@ IOperand const * TOperand<T>::to_other( IOperand const & rhs, eFunctionType func
 template<typename T>
 IOperand const * TOperand<T>::choose_type( IOperand const & rhs, eFunctionType functionType) const
 {
-	#define opMeth IOperand const * (TOperand::*)(IOperand const &rhs, eFunctionType ftype, eOperandType t) const
+#define opMeth IOperand const * (TOperand::*)(IOperand const &rhs, eFunctionType ftype, eOperandType t) const
 	std::map <eOperandType, opMeth> fmap =
 	{
 		{INT8, &TOperand::to_other<int8_t>},
@@ -361,5 +376,62 @@ IOperand const * TOperand<T>::operator%( IOperand const & rhs ) const
 {
 	return choose_type(rhs, MOD);
 }
+
+template<typename T>
+template<typename B>
+IOperand const * TOperand<T>::sub( B a, B b, eOperandType operandType) const
+{
+	return CreateOperand<B>(operandType, a - b);
+}
+
+template<typename T>
+template<typename B>
+IOperand const * TOperand<T>::add( B a, B b, eOperandType operandType) const
+{
+	return CreateOperand<B>(operandType, a + b);
+}
+
+template<typename T>
+template<typename B>
+IOperand const * TOperand<T>::mul( B a, B b, eOperandType operandType) const
+{
+	return CreateOperand<B>(operandType, a * b);
+}
+
+template<typename T>
+template<typename B>
+IOperand const * TOperand<T>::div( B a, B b, eOperandType operandType) const
+{
+	return CreateOperand<B>(operandType, a / b);
+}
+
+template<typename T>
+template<typename B>
+IOperand const * TOperand<T>::mod( B a, B b, eOperandType operandType) const
+{
+	return CreateOperand<B>(operandType, fmod(a, b));
+}
+
+template<typename T>
+template<typename B>
+IOperand const * TOperand<T>::ft_and( B a, B b, eOperandType operandType) const
+{
+	return CreateOperand<B>(operandType, static_cast<int>(a) & static_cast<int>(b));
+}
+
+template<typename T>
+template<typename B>
+IOperand const * TOperand<T>::ft_or( B a, B b, eOperandType operandType) const
+{
+	return CreateOperand<B>(operandType, static_cast<int>(a) | static_cast<int>(b));
+}
+
+template<typename T>
+template<typename B>
+IOperand const * TOperand<T>::ft_xor( B a, B b, eOperandType operandType) const
+{
+	return CreateOperand<B>(operandType, static_cast<int>(a) ^ static_cast<int>(b));
+}
+
 
 #endif
