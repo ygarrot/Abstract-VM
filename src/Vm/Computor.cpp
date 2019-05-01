@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/05/01 16:16:02 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/01 16:16:58 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	Computor::displayFuncName(Token *token)
 void	Computor::verboseOneArg(IOperand const& op)
 {
 	std::cout
-	<< BLUE 
 	<<  " : "
+	<< BLUE 
 	<< op.toString();
 }
 
