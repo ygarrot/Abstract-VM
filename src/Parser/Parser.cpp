@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:37:19 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/05/01 14:45:53 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/01 14:56:41 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,22 +52,22 @@ void	Parser::setFunction(Token * token, bool & value_expected)
 {
 	t_verbose verboseDic[] =
 	{
-		{ "pop", "", &Computor::pop, 0},
-		{ "dump","", &Computor::dump, 0},
-		{ "add", "+", &Computor::add, 0},
-		{ "sub", "-", &Computor::sub, 0},
-		{ "mul", "*", &Computor::mul, 0},
-		{ "div", "/", &Computor::div, 0},
-		{ "mod", "%", &Computor::mod, 0},
-		{ "or", "|", &Computor::ft_or, 0},
-		{ "and", "&", &Computor::ft_and, 0},
-		{ "xor", "^", &Computor::ft_xor, 0},
+		{ "pop", "", &Computor::pop, 0, 0},
+		{ "dump","", &Computor::dump, 0, 0},
+		{ "add", "+", &Computor::add, 0, 2},
+		{ "sub", "-", &Computor::sub, 0, 2},
+		{ "mul", "*", &Computor::mul, 0, 2},
+		{ "div", "/", &Computor::div, 0, 2},
+		{ "mod", "%", &Computor::mod, 0, 2},
+		{ "or", "|", &Computor::ft_or, 0, 2},
+		{ "and", "&", &Computor::ft_and, 0, 2},
+		{ "xor", "^", &Computor::ft_xor, 0, 2},
 		/* { "min", "<", &Computor::min, 0}, */
 		/* { "max", &Computor::max, 0}, */
-		{ "print", "", &Computor::print, 0},
-		{ "exit", "", &Computor::exit, 0},
-		{ "push", "", 0, &Computor::push},
-		{ "assert", "", 0, &Computor::ft_assert},
+		{ "print", "", &Computor::print, 0, 0},
+		{ "exit", "", &Computor::exit, 0, 0},
+		{ "push", "", 0, &Computor::push, 1},
+		{ "assert", "", 0, &Computor::ft_assert, 1},
 	};
 
 	func_tab_t funcMap =

@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:52 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/05/01 14:07:42 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/01 15:12:19 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,9 @@ class Computor
 		void		check_stack(size_t size);
 		TOKEN_PTR get_tokens(){return _tokens;};
 		void set_tokens(TOKEN_PTR tokens){_tokens = tokens;};
-		void	verbose(Token *token, OP_PTR op);
+		void	displayFuncName(Token *token);
+		void	verboseOneArg(IOperand const & op);
+		void	verboseTwoArg(Token *token, OP_PTR op);
 	private:
 		OP_PTR _stack;
 		TOKEN_PTR	_tokens;

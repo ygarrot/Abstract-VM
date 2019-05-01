@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/05/01 15:17:27 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/01 15:10:58 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@ void	Computor::verboseOneArg(IOperand const& op)
 {
 	std::cout
 	<<  " : "
-	<< op.toString();
+	<< op->toString();
 }
 
 void	Computor::verboseTwoArg(Token *token, OP_PTR op)
 {
-	verboseOneArg(*op[0]);
+	verboseOneArg(*op->get());
 	std::cout
 	<< " "
 	<< token->verbose.op << " "
 	<< (*op[1]).toString() << " = "
-	<< _stack.back()->toString();
+	<< _stack.back()->toString() << "\n";
 }
 
 void	Computor::check_stack(size_t size)
@@ -66,8 +66,10 @@ void		Computor::visit()
 					if (it + 1 != _tokens.end() && (it + 1)->get()->get_type() != TokenType::Instruction)
 					{
 						displayFuncName(token);
+						std::cout
+						<<  " : "
+						<< it->get()->op->toString();
 						++it;
-						verboseOneArg(*it->get()->op);
 						token->verbose.f(this, it->get()->op);
 					}
 					else
@@ -77,12 +79,13 @@ void		Computor::visit()
 						displayFuncName(token);
 						if (token->verbose.arg_number == 2)
 							verboseTwoArg(token, ret);
+						else
+							std::cout << "\n";
 					}
 					break;
 				default:
 					;
 			}
-			std::cout << "\n";
 		}
 		catch (TokenException &e)
 		{

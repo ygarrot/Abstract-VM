@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 12:13:55 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/05/01 14:46:52 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/01 14:56:28 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_verbose
 	std::string	op;
 	meth		method;
 	std::function<void(Computor*, IOperand const * rhs)>	f;
+	int		arg_number;
 }		t_verbose;
 
 class Token
