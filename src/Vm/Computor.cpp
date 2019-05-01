@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/05/01 15:48:22 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/01 16:16:02 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,16 @@
 void	Computor::displayFuncName(Token *token)
 {
 	std::cout
+	<< BLACK
 	<< "Line " << token->get_line() << " : "
+	<< CYAN
 	<< token->verbose.func_name;
 }
 
 void	Computor::verboseOneArg(IOperand const& op)
 {
 	std::cout
+	<< BLUE 
 	<<  " : "
 	<< op.toString();
 }
