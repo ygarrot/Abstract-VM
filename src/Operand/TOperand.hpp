@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:09:14 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/29 13:25:18 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/01 11:20:31 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ class TOperand: public IOperand {
 		template<typename B>
 			void checkBitwise(B a, B b) const;
 
-		auto get_highest_prec(TOperand<T> const & rhs) const;
 		template<typename B>
 			std::pair<B, B> get_type(IOperand const & op) const;
 
@@ -92,6 +91,14 @@ class TOperand: public IOperand {
 		template<typename B>
 		IOperand const * apply_func(eOperandType operandType, eFunctionType functionType, B a, B b) const;
 		IOperand const * choose_type( IOperand const & rhs, eFunctionType functionType) const;
+
+		IOperand const * to_double( IOperand const & rhs, eFunctionType functionType, eOperandType type) const;
+		IOperand const * to_float( IOperand const & rhs, eFunctionType functionType, eOperandType type) const;
+		IOperand const * to_int8_t( IOperand const & rhs, eFunctionType functionType, eOperandType type) const;
+		IOperand const * to_int16_t( IOperand const & rhs, eFunctionType functionType, eOperandType type) const;
+		IOperand const * to_int32_t( IOperand const & rhs, eFunctionType functionTyp, eOperandType typee) const;
+		template<typename B>
+			IOperand const * to_other( IOperand const & rhs, eFunctionType functionType, eOperandType type) const;
 
 		virtual	IOperand const * operator+( IOperand const & rhs ) const;
 		virtual	IOperand const * operator-( IOperand const & rhs ) const;
@@ -110,6 +117,9 @@ class TOperand: public IOperand {
 	protected:
 };
 
+
+/* template<typename T> */
+/* std::pair<int, B> TOperand<T>::get_type(IOperand const & op) const */
 
 template<typename T>
 template<typename B>
@@ -279,30 +289,27 @@ IOperand const * TOperand<T>::apply_func(eOperandType operandType, eFunctionType
 }
 
 template<typename T>
+template<typename B>
+IOperand const * TOperand<T>::to_other( IOperand const & rhs, eFunctionType functionType, eOperandType type) const
+{
+	std::pair<B, B> pair = get_type<B>(rhs);
+	return apply_func<B>(type, functionType, pair.first, pair.second);
+}
+
+template<typename T>
 IOperand const * TOperand<T>::choose_type( IOperand const & rhs, eFunctionType functionType) const
 {
-	if (this->getType()  == DOUBLE || rhs.getType() == DOUBLE)
+	#define opMeth IOperand const * (TOperand::*)(IOperand const &rhs, eFunctionType ftype, eOperandType t) const
+	std::map <eOperandType, opMeth> fmap =
 	{
-		auto[a, b] = get_type<double>(rhs);
-		return apply_func<double>(DOUBLE, functionType, a , b);
-	}
-	if (this->getType()  == FLOAT || rhs.getType() == FLOAT)
-	{
-		auto[a, b] = get_type<float>(rhs);
-		return apply_func<float>(FLOAT, functionType, a , b);
-	}
-	if (this->getType()  == INT32 || rhs.getType() == INT32)
-	{
-		auto[a, b] = get_type<int32_t>(rhs);
-		return apply_func<int32_t>(INT32, functionType, a , b);
-	}
-	if (this->getType()  == INT16 || rhs.getType() == INT16)
-	{
-		auto[a, b] = get_type<int16_t>(rhs);
-		return apply_func<int16_t>(INT8, functionType, a , b);
-	}
-	auto[a, b] = get_type<int8_t>(rhs);
-	return apply_func<int8_t>(INT8, functionType, a , b);
+		{INT8, &TOperand::to_other<int8_t>},
+		{INT16, &TOperand::to_other<int16_t>},
+		{INT32, &TOperand::to_other<int32_t>},
+		{FLOAT, &TOperand::to_other<float>},
+		{DOUBLE, &TOperand::to_other<double>},
+	};
+	eOperandType highestprec = rhs.getType() > this->getType() ? rhs.getType() : this->getType();
+	return (this->*fmap[highestprec])(rhs,functionType, highestprec);
 }
 
 template<typename T>
