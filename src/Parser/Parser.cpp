@@ -6,16 +6,11 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:37:19 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/05/01 15:58:54 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/01 16:24:45 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Parser.hpp"
-
-Parser::Parser(std::string target) 
-{
-	(void)target;
-}
 
 Parser::Parser() 
 {
@@ -39,12 +34,13 @@ Parser::~Parser()
 
 Parser::Parser(Parser const &src)
 {
+	_tokens = src._tokens;
 	*this = src;
 }
 
 Parser     &Parser::operator=(Parser const & src) 
 {
-	(void)src;
+	_tokens = src._tokens;
 	return *this;
 }
 

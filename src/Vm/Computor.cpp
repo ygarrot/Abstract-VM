@@ -6,37 +6,62 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/05/01 16:16:58 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/01 16:24:03 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Computor.hpp"
 
+Computor &Computor::operator=(Computor const & src)
+{
+	_verbose = src._verbose;
+	_stack = src._stack;
+	_tokens = src._tokens;
+	return *this;
+};
+
+Computor::Computor(Computor const & src)
+{
+	_verbose = src._verbose;
+	_stack = src._stack;
+	_tokens = src._tokens;
+}
+
+TOKEN_PTR Computor::get_tokens()
+{
+	return _tokens;
+};
+
+void Computor::set_tokens(TOKEN_PTR tokens)
+{
+	_tokens = tokens;
+};
+
 void	Computor::displayFuncName(Token *token)
 {
 	std::cout
-	<< BLACK
-	<< "Line " << token->get_line() << " : "
-	<< CYAN
-	<< token->verbose.func_name;
+		<< BLACK
+		<< "Line " << token->get_line() << " : "
+		<< CYAN
+		<< token->verbose.func_name;
 }
 
 void	Computor::verboseOneArg(IOperand const& op)
 {
 	std::cout
-	<<  " : "
-	<< BLUE 
-	<< op.toString();
+		<<  " : "
+		<< BLUE 
+		<< op.toString();
 }
 
 void	Computor::verboseTwoArg(Token *token, OP_PTR op)
 {
 	verboseOneArg(*op[0]);
 	std::cout
-	<< " "
-	<< token->verbose.op << " "
-	<< (*op[1]).toString() << " = "
-	<< _stack.back()->toString();
+		<< " "
+		<< token->verbose.op << " "
+		<< (*op[1]).toString() << " = "
+		<< _stack.back()->toString();
 }
 
 void	Computor::check_stack(size_t size)
@@ -58,7 +83,7 @@ OP_PTR Computor::get_elem(size_t n)
 
 void		Computor::visit()
 {
-OP_PTR ret; 
+	OP_PTR ret; 
 	for (TOKEN_PTR::iterator it = _tokens.begin(); it != _tokens.end(); ++it)
 	{
 		Token *token = it->get();

@@ -6,17 +6,12 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 16:04:05 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/04/29 14:50:33 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/01 16:25:25 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "Lexer.hpp"
-
-Lexer::Lexer(std::string target) 
-{
-	(void)target;
-}
 
 Lexer::Lexer() :_lines(-1)
 {
@@ -29,12 +24,15 @@ Lexer::~Lexer()
 
 Lexer::Lexer(Lexer const &src)
 {
+	_tokens = src._tokens;
+	_lines = src._lines;
 	*this = src;
 }
 
 Lexer     &Lexer::operator=(Lexer const & src) 
 {
-	(void)src;
+	_tokens = src._tokens;
+	_lines = src._lines;
 	return *this;
 }
 

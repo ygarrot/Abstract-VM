@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:52 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/05/01 15:21:02 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/01 16:24:07 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ class Computor
 		Computor(){};
 		Computor(bool verbose) : _verbose(verbose){};
 		Computor(std::string){};
-		Computor(Computor const & src){(void)src;};
+		Computor(Computor const & src);
 		~Computor(void){};
 		OP_PTR get_elem(size_t n);
 		void		push(IOperand const * op);
@@ -61,8 +61,8 @@ class Computor
 		void		ft_xor();
 
 		void		check_stack(size_t size);
-		TOKEN_PTR get_tokens(){return _tokens;};
-		void set_tokens(TOKEN_PTR tokens){_tokens = tokens;};
+		TOKEN_PTR get_tokens();
+		void set_tokens(TOKEN_PTR tokens);
 		void	displayFuncName(Token *token);
 		void	verboseOneArg(IOperand const & op);
 		void	verboseTwoArg(Token *token, OP_PTR op);
@@ -73,5 +73,3 @@ class Computor
 };
 
 #endif
-
-

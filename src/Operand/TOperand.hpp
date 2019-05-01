@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 15:09:14 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/05/01 15:52:14 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/01 16:33:59 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #ifndef ABSTRACT_VM_TOPERAND_HPP
 #define ABSTRACT_VM_TOPERAND_HPP
 
-class OperandFactory;
+struct OperandFactory;
 template<typename T>
 class TOperand;
 
@@ -37,7 +37,7 @@ enum eFunctionType
 	XOR,
 };
 
-class OperandFactory
+struct OperandFactory
 {
 	public:
 		IOperand const * createOperand(std::string str) const;
@@ -57,10 +57,10 @@ static const OperandFactory OpFactory;
 template<typename T>
 class TOperand: public IOperand {
 	public:
-		IOperand &operator=(IOperand const & src);
+		IOperand &operator=(TOperand const & src);
 		TOperand(){};
 		TOperand(std::string str, T value, eOperandType type) : _str(str), _n(value), _type(type){};
-		TOperand(TOperand const & src){(void)src;};
+		TOperand(TOperand const & src);
 		~TOperand(void){};
 		T		get_value(void) const {return this->_n;};
 		virtual	int getPrecision( void ) const;
@@ -128,6 +128,7 @@ class TOperand: public IOperand {
 		virtual	IOperand const * operator^( IOperand const & rhs ) const;
 
 		virtual	std::string const & toString( void ) const;
+
 	protected:
 		std::string _str;
 		T _n;
@@ -157,11 +158,20 @@ IOperand const * TOperand<T>::CreateOperand(eOperandType type, B value) const
 }
 
 	template<typename T>
-IOperand &TOperand<T>::operator=(IOperand const & src)
+		TOperand<T>::TOperand(TOperand const & tmp)
 {
-	TOperand<T> const & tmp = reinterpret_cast< const TOperand<T>& >(src);
+	_str = tmp._str;
+	_n = tmp._n;
+	_type = tmp._type;
+	*this = tmp;
+};
+
+	template<typename T>
+IOperand &TOperand<T>::operator=(TOperand<T> const & tmp)
+{
 	if (tmp == this)
 		return *this;
+	_str = tmp._str;
 	_n = tmp._n;
 	_type = tmp._type;
 }
