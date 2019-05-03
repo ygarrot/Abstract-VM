@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 16:04:05 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/05/01 16:25:25 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/03 11:13:42 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ int Lexer::lex(std::string toParse)
 	std::string nl;
 
 	fs.open (toParse);
-	if (!fs.is_open())
-		return -1;
+	if (!fs.good() || !fs.is_open())
+		throw InvalidFileException();
 	while (getline(fs, nl, '\n'))
 	{
 		try {

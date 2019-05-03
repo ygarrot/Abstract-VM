@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 14:42:20 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/05/01 16:24:03 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/02 10:46:34 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ OP_PTR Computor::get_elem(size_t n)
 void		Computor::visit()
 {
 	OP_PTR ret; 
+
 	for (TOKEN_PTR::iterator it = _tokens.begin(); it != _tokens.end(); ++it)
 	{
 		Token *token = it->get();
@@ -121,8 +122,8 @@ void		Computor::visit()
 			throw e;
 		}
 	}
-	if (_tokens.back()->get_str().compare("exit"))
-		throw NoExitException(_tokens.back()->get_line()); 
+	if (_tokens.empty() || _tokens.back()->get_str().compare("exit"))
+		throw NoExitException(_tokens.empty() ? 1 : _tokens.back()->get_line()); 
 }
 
 void		Computor::ft_assert(IOperand const * v)

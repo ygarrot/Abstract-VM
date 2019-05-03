@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 12:55:13 by ygarrot           #+#    #+#             */
-/*   Updated: 2019/05/01 16:15:14 by ygarrot          ###   ########.fr       */
+/*   Updated: 2019/05/03 11:11:11 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,16 @@ class NoExitException : public TokenException
 		NoExitException(NoExitException const &src);
 		NoExitException & operator=(NoExitException const & src);
 		virtual ~NoExitException(void) throw() {};
+};
+
+class InvalidFileException : public TokenException
+{
+	public:
+		explicit InvalidFileException(){_default= "File you passed as argument is invalid";};
+		InvalidFileException(int line) : TokenException("File you passed as argument is invalid", line) {};
+		InvalidFileException(InvalidFileException const &src);
+		InvalidFileException & operator=(InvalidFileException const & src);
+		virtual ~InvalidFileException(void) throw() {};
 };
 
 class AssertException : public TokenException
